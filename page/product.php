@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COSC360-carmelcarmel</title>
+
+    <link rel="stylesheet" href="../css/reset.css">
+
+    <script src="https://kit.fontawesome.com/28b63fb9f5.js" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../Auth/auth.js"></script>
+</head>
+<body style="height:100vh;">
+
+<?php
+// Start session
+session_start();
+
+// Check if user is already logged in
+if (isset($_SESSION['user_id'])) {
+  echo '<script>user.signIn("username","'.$_SESSION['email'].'", true);</script>';
+  echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
+}
+
+?>
+
+
+    <!-- Header Search Bar -->
+    
+    <link rel="stylesheet" href="../component/searchBar/searcBar.css">
+    <header id="headerSearchBar" style="position: sticky; top: 0; z-index: 1;">
+        <script src="../component/searchBar/searchBar.js" async></script>
+    </header>
+
+    <div class="mx-auto p-4" style=" max-width:1200px; background-color: rgb(243, 240, 240);">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="productSearch.php">Product Search</a></li>
+                <li class="breadcrumb-item active" aria-current="Product">Product</li>
+            </ol>
+        </nav>
+
+        <hr>
+
+        <link rel="stylesheet" href="../component/productCard/productCard.css">
+        <div class="product_info">
+            <script src="../component/productCard/productCard.js"></script>
+        </div>
+        
+        <link rel="stylesheet" href="../component/opinions/opinions.css">
+        <div class="opinions">
+            <script src="../component/opinions/opinions.js"></script>
+            
+        </div>
+
+        <hr>
+        
+                    
+        <table class="table table-striped">
+            <style>
+                .table a {
+                    text-decoration: none;
+                    color: black;
+                }
+                .table a:hover {
+                    color: blue;
+                }
+            </style>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Review</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="1">
+                <th scope="row">1</th>
+                <td>Dog</td>
+                <td>1</td>
+                <td><a href="./opinion.php?id=1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam fugit perferendis ratione commodi provident unde explicabo iste libero sint ducimus ea eaque facilis quo architecto facere, aut corrupti at inventore?</a></td>
+            </tr>
+              <tr id="2">
+                <th scope="row">2</th>
+                <td>Cat</td>
+                <td>3</td>
+                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum quibusdam sint sed temporibus nulla necessitatibus qui reprehenderit vel? Repellat deleniti natus possimus excepturi dolor quo corporis vel voluptatibus mollitia ducimus!</td>
+              </tr>
+              <tr id="3">
+                <th scope="row">3</th>
+                <td>Pig</td>
+                <td>5</td>
+                <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste eligendi fugit eos quae, numquam alias quo, deserunt sapiente exercitationem tempora architecto cupiditate quos perspiciatis libero officia non provident doloribus ad?</td>
+              </tr>
+            </tbody>
+          </table>
+
+
+
+
+        <form class="my-4 d-flex flex-column gap-3">
+            <div class="form-group d-flex align-items-center gap-3">
+                <label for="rating" class="ms-3">Rating</label>
+                <select class="form-control" id="rating">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            <div class="form-group">
+              <label for="review" style="display: none;">Review</label>
+              <textarea class="form-control" id="review" rows="6" placeholder="Review"></textarea>
+            </div>
+            <button type="button" class="btn btn-outline-primary w-100">Submit</button>
+        </form>
+    </div>
+
+    <div id="footer">
+      <script src="../component/footer/footer.js"></script>
+  </div>
+
+
+
+
+
+    <div id="offCanvas"></div>
+
+</body>
+</html>
