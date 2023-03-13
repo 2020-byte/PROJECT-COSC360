@@ -49,59 +49,20 @@ if (isset($_SESSION['user_id'])) {
 
         <hr>
 
-        <link rel="stylesheet" href="../component/productCard/productCard.css">
+        <link rel="stylesheet" href="../component/productInfo/productInfo.css">
         <div class="product_info">
-            <script src="../component/productCard/productCard.js"></script>
+            <script src="../component/productInfo/productInfo.js"></script>
         </div>
         
+<hr>
         <link rel="stylesheet" href="../component/opinions/opinions.css">
-        <div class="opinions">
-            <script src="../component/opinions/opinions.js"></script>
+        <div id="opinionList">
+            <script src="../component/opinions/opinionss.js"></script>
             
         </div>
 
         <hr>
-        
-                    
-        <table class="table table-striped">
-            <style>
-                .table a {
-                    text-decoration: none;
-                    color: black;
-                }
-                .table a:hover {
-                    color: blue;
-                }
-            </style>
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Username</th>
-                <th scope="col">Rating</th>
-                <th scope="col">Review</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="1">
-                <th scope="row">1</th>
-                <td>Dog</td>
-                <td>1</td>
-                <td><a href="./opinion.php?id=1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam fugit perferendis ratione commodi provident unde explicabo iste libero sint ducimus ea eaque facilis quo architecto facere, aut corrupti at inventore?</a></td>
-            </tr>
-              <tr id="2">
-                <th scope="row">2</th>
-                <td>Cat</td>
-                <td>3</td>
-                <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum quibusdam sint sed temporibus nulla necessitatibus qui reprehenderit vel? Repellat deleniti natus possimus excepturi dolor quo corporis vel voluptatibus mollitia ducimus!</td>
-              </tr>
-              <tr id="3">
-                <th scope="row">3</th>
-                <td>Pig</td>
-                <td>5</td>
-                <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste eligendi fugit eos quae, numquam alias quo, deserunt sapiente exercitationem tempora architecto cupiditate quos perspiciatis libero officia non provident doloribus ad?</td>
-              </tr>
-            </tbody>
-          </table>
+      
 
 
 

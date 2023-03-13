@@ -94,7 +94,7 @@ const showData = (items) => {
                 makeHtml(items[i], responses[i]);
             }
 
-            $(".item_list").html(test_html);
+            $(".item_list").html(productItem_html);
         })
         .catch(error => {
             console.log("Error receiving other data", error);
@@ -104,7 +104,7 @@ const showData = (items) => {
 
 
 
-let test_html ='';
+let productItem_html ='';
 const makeHtml = (item, opinions) => {
     const limit = 140;
     const truncatedReview = opinions.map(i => i.review.length > limit? i.review.slice(0,limit) + '...': i.review);
@@ -112,7 +112,7 @@ const makeHtml = (item, opinions) => {
     
     rating_as_star = star_html.repeat(rating);
     
-    test_html = test_html.concat(`
+    productItem_html = productItem_html.concat(`
     <div id=${`product`+id} class="item_box d-flex gap-4 flex-column flex-lg-row flex-grow-1">
 <div class="item_box__des d-flex gap-4 flex-column flex-sm-row">
     <div class="item_box__des__img_frame">
@@ -126,7 +126,7 @@ const makeHtml = (item, opinions) => {
             <li id="productName" class="item_box__info__ul__item" value="name">
                 ${title} 
             </li>
-            <li id="productPrice" class="item_box__info__ul__item" value="price">${price}</li>
+            <li id="productPrice" class="item_box__info__ul__item" value="price">${parseInt(price).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}</li>
             <li id="productDescription" class="item_box__info__ul__item" value="description">
                 ${user.user?detail: "Need to sign in to see description "}
             </li>
