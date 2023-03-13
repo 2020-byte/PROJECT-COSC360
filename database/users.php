@@ -23,7 +23,7 @@ $itemId = $_GET['id'];
 
 
 // Prepare and execute the SQL query
-$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT email, username, id, status FROM users WHERE id = ?");
 // $stmt = $conn->prepare("SELECT * FROM opinions");
 
 $userId = $_GET['id'];

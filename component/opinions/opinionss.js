@@ -36,10 +36,11 @@ $.ajax({
   type: "GET",
   dataType: "json",
   data: {
-      id: itemId
+    itemId: itemId
   },
   success: function(response) {
-    // Update the HTML with the fetched data
+    // Update the HTML with the fetched data]
+
     showOpinion(response);
 
     
@@ -47,7 +48,7 @@ $.ajax({
   },
   error: function(xhr, status, error) {
       // Handle errors here
-      console.log("Error: " + error);
+      console.log("First Error: " + error);
   }
 });
 

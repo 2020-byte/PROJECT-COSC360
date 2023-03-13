@@ -47,7 +47,7 @@
         class="mx-auto p-5"
         >
 
-        <table class="table table-striped">
+        <table class="table table-striped" style="text-align: center;">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -58,8 +58,8 @@
             <tbody>
               <tr>
                 <th scope="row">1</th>
-                <td>Dog</td>
-                <td>Iphone13</td>
+                <td id="username">username</td>
+                <td id="itemTitle" ></td>
             </tr>
             </tbody>
             </table>
@@ -68,7 +68,7 @@
             <div class="form-group d-flex align-items-center gap-3">
                 <label for="rating" class="ms-3">Rating</label>
                 <select class="form-control" id="rating">
-                  <option selected>1</option>
+                  <option>1</option>
                   <option>2</option>
                   <option>3</option>
                   <option>4</option>
@@ -77,13 +77,92 @@
               </div>
             <div class="form-group">
               <label for="review" style="display: none;">Review</label>
-                <textarea class="form-control" rows="6" id="review">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam fugit perferendis ratione commodi provident unde explicabo iste libero sint ducimus ea eaque facilis quo architecto facere, aut corrupti at inventore?</textarea>
+                <textarea class="form-control" rows="6" id="review"></textarea>
             </div>
             <div class="d-flex gap-2 flex-md-row flex-column">
                 <button type="button" class="btn btn-outline-primary w-100">Edit</button>
                 <button type="button" class="btn btn-outline-primary w-100">Delete</button>
             </div>
         </form>
+
+        <script>
+          $(document).ready(function() {
+  const urlParamsOpinionId = new URLSearchParams(window.location.search);
+  const opinionId = urlParamsOpinionId.get('id');
+  $.ajax({
+    url: "../database/opinions.php",
+    type: "GET",
+    dataType: "json",
+    data: {
+      id: opinionId
+    },
+    success: function(response) {
+      // Update the HTML with the fetched data
+      const { id, review, rating, userId, itemId } = response[0];
+      
+      $("#username").val(userId);
+      $("#rating").val(rating);
+      $("#review").val(review);
+
+      showTitle(itemId);
+      showUsername(userId);
+
+
+
+    },
+    error: function(xhr, status, error) {
+      // Handle errors here
+      console.log("Error: " + error);
+    }
+  });
+});
+
+
+const showTitle = (itemId) => {
+  $.ajax({
+    url: "../database/item.php",
+    type: "GET",
+    dataType: "json",
+    data: {
+        id: itemId
+    },
+    success: function(response) {
+        // Update the HTML with the fetched data
+        console.log(response.title);
+        $("#itemTitle").text(response.title);
+
+    },
+    error: function(xhr, status, error) {
+        // Handle errors here
+        console.log("Error: " + error);
+    }
+});
+}
+
+const showUsername = (userId) => {
+  $.ajax({
+    url: "../database/users.php",
+    type: "GET",
+    dataType: "json",
+    data: {
+        id: userId
+    },
+    success: function(response) {
+        // Update the HTML with the fetched data
+        $("#username").text(response.username);
+
+    },
+    error: function(xhr, status, error) {
+        // Handle errors here
+        console.log("Error: " + error);
+    }
+});
+
+}
+
+
+
+        </script>
 
         </div>
     </div>

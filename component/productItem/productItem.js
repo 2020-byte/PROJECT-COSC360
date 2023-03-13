@@ -81,7 +81,7 @@ const showData = (items) => {
             type: "GET",
             dataType: "json",
             data: {
-                id: items[i].id
+                itemId: items[i].id
             }
         });
         

@@ -25,8 +25,22 @@ if (!$conn) {
 $stmt = $conn->prepare("SELECT * FROM opinions WHERE itemId = ?");
 // $stmt = $conn->prepare("SELECT * FROM opinions");
 
-$itemId = $_GET['id'];
-$stmt->bind_param("i", $itemId);
+
+if(isset($_GET['itemId'])) {
+    $itemId = $_GET['itemId'];
+}
+
+
+if(isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $stmt = $conn->prepare("SELECT * FROM opinions WHERE id = ?");
+    $stmt->bind_param("i", $id);
+
+}else {
+    $stmt->bind_param("i", $itemId);
+
+}
+
 $stmt->execute();
 
 // Get the result
