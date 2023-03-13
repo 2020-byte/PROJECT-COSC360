@@ -19,9 +19,18 @@ $conn = mysqli_connect($host, $user, $password, $dbname);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
+$search = $_GET['search'];
 
-$sql = "SELECT * FROM items";
+if(!$search) {
+    $sql = "SELECT * FROM items";
+}else {
+    $sql = "SELECT * FROM items WHERE title LIKE '%" . $search . "%'";
+}
+
 $result = $conn->query($sql);
+
+
+
 
 $data = array();
 if ($result->num_rows > 0) {

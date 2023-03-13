@@ -38,7 +38,7 @@ if (isset($_SESSION['user_id'])) {
     <header id="headerSearchBar" style="position: sticky; top: 0; z-index: 1;">
         <script src="../component/searchBar/searchBar.js" async></script>
     </header>
-    <div class="mx-auto p-4" style=" max-width:1200px;">
+    <div class="mx-auto p-4" style=" max-width:1200px; min-height: 685px;">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>

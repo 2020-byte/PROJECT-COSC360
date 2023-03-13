@@ -39,8 +39,8 @@ const searchbar_html = `
     <div class="nav__box d-flex align-items-center">
         <button id="toggleSideBar" class="btn menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"><i class="fa-solid fa-bars"></i></button>
         <a class="navbar-brand m-1 m-md-2" href="./index.php"><img src="../img/camel.png" alt="logo"></a>
-        <form action="./productSearch.php" method="GET" class="nav__form">
-            <input  type="search" name="search" class="nav__form__child" placeholder="Search" aria-label="Search">
+        <form action="../database/test.php" method="GET" class="nav__form">
+            <input  id="searchbar" type="search" name="search" class="nav__form__child" placeholder="Search" aria-label="Search">
             <button type="submit" class="nav__form__child"><i class="fa-solid fa-lg fa-magnifying-glass nav__form__child"></i></button>
         </form>
         
@@ -103,6 +103,10 @@ $('#headerSearchBar').html(
     ${searchbar_html}
     `
 )
+const urlParams = new URLSearchParams(window.location.search);
+    const search = urlParams.get('search');
+
+$('#searchbar').val(search);
 
 $(`#offCanvas`).html(
     `
@@ -118,11 +122,12 @@ $(`#offCanvas`).html(
     `
 )
 
-// $("nav form button").click(e => {
-//     e.preventDefault();
-//     window.location.href = "./productSearch.php";
+$("nav form button").click(e => {
+    e.preventDefault();
+    const searchValue = $('#searchbar').val();
+    window.location.href = `./productSearch.php?search=${searchValue}`;
     
-// });
+});
 
 
 

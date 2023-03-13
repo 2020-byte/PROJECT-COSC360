@@ -1,34 +1,4 @@
 
-const opinions = [
-    `
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos voluptatem laudantium quo magnam! Beatae repudiandae maiores, debitis, expedita aliquam magni, aut doloremque error veritatis a impedit sequi aspernatur. Expedita, eos! 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos voluptatem laudantium quo magnam! Beatae repudiandae maiores, debitis, expedita aliquam magni, aut doloremque error veritatis a impedit sequi aspernatur. Expedita, eos! 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos voluptatem laudantium quo magnam! Beatae repudiandae maiores, debitis, expedita aliquam magni, aut doloremque error veritatis a impedit sequi aspernatur. Expedita, eos! 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos voluptatem laudantium quo magnam! Beatae repudiandae maiores, debitis, expedita aliquam magni, aut doloremque error veritatis a impedit sequi aspernatur. Expedita, eos! 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos voluptatem laudantium quo magnam! Beatae repudiandae maiores, debitis, expedita aliquam magni, aut doloremque error veritatis a impedit sequi aspernatur. Expedita, eos! 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos voluptatem laudantium quo magnam! Beatae repudiandae maiores, debitis, expedita aliquam magni, aut doloremque error veritatis a impedit sequi aspernatur. Expedita, eos! 
-`,
-`
-opinion2 opinion2 opinion2 opinion2 opinion2 opinion2 opinion2
-opinion2 opinion2 opinion2 opinion2 opinion2 opinion2 opinion2
-opinion2 opinion2 opinion2 opinion2 opinion2 opinion2 opinion2
-opinion2 opinion2 opinion2 opinion2 opinion2 opinion2 opinion2
-opinion2 opinion2 opinion2 opinion2 opinion2 opinion2 opinion2
-opinion2 opinion2 opinion2 opinion2 opinion2 opinion2 opinion2
-`
-,
-`
-opinion3 opinion3 opinion3 opinion3 opinion3 opinion3 opinion3
-opinion3 opinion3 opinion3 opinion3 opinion3 opinion3 opinion3
-opinion3 opinion3 opinion3 opinion3 opinion3 opinion3 opinion3
-opinion3 opinion3 opinion3 opinion3 opinion3 opinion3 opinion3
-opinion3 opinion3 opinion3 opinion3 opinion3 opinion3 opinion3
-opinion3 opinion3 opinion3 opinion3 opinion3 opinion3 opinion3
-opinion3 opinion3 opinion3 opinion3 opinion3 opinion3 opinion3
-opinion3 opinion3 opinion3 opinion3 opinion3 opinion3 opinion3
-`
-]
-
 
 
 // let productInfo = {
@@ -78,11 +48,17 @@ let star_html = `<i class="item_box__info__ul__item__rating fa-solid fa-star"></
 
 let totalPage;
 const items_per_page = 4;
+
+
+console.log("client: "+search);
 ////////////////////////////////////////////////////////////////////////////
 $.ajax({
-    url: "../database/test.php",
+    url: "../database/items.php",
     type: "GET",
     dataType: "json",
+    data: {
+        search: search
+    },
     success: function(response) {
         // Update the HTML with the fetched data
         showData(response);
@@ -96,21 +72,42 @@ $.ajax({
 });
 
 const showData = (items) => {
+
+    const promises = [];
+
     for(let i = 0; i < items.length; i++) {
-        makeHtml(items[i]);
+        const promise = $.ajax({
+            url:  "../database/opinions.php",
+            type: "GET",
+            dataType: "json",
+            data: {
+                id: items[i].id
+            }
+        });
+        
+        promises.push(promise);
     }
 
-    $(".item_list").html(
-        test_html
-    )
+    Promise.all(promises)
+        .then(responses => {
+            for(let i = 0; i < responses.length; i++) {
+                makeHtml(items[i], responses[i]);
+            }
+
+            $(".item_list").html(test_html);
+        })
+        .catch(error => {
+            console.log("Error receiving other data", error);
+        });
 
 }
 
 
 
 let test_html ='';
-const makeHtml = (item) => {
-
+const makeHtml = (item, opinions) => {
+    const limit = 140;
+    const truncatedReview = opinions.map(i => i.review.length > limit? i.review.slice(0,limit) + '...': i.review);
     let {description, detail, id, image, link, price, rating, title} = item;
     
     rating_as_star = star_html.repeat(rating);
@@ -138,15 +135,16 @@ const makeHtml = (item) => {
     </div>
 </div>
 <div class="item_box__opinion pt-2 pt-md-4">
+    <h5 style="padding-left:1rem; text-decoration: underline;">Review</h5>
     <ul class="item_box__opinion__ul gap-4">
         <li class="item_box__opinion__ul__item">
-            ${'Undefined'}
+            ${truncatedReview[0]?truncatedReview[0]:''}
         </li>
         <li class="item_box__opinion__ul__item">
-            ${'Undefined'}
+            ${truncatedReview[1]?truncatedReview[1]:''}
         </li>
         <li class="item_box__opinion__ul__item">
-            ${'Undefined'}
+            ${truncatedReview[2]?truncatedReview[2]:''}
         </li>
     </ul>
     <button class="item_box__button opinion">More opinion</button>
@@ -172,13 +170,14 @@ $(document).on("click", ".item_box__button.opinion", function() {
         let id = $(this).closest(".item_box").attr("id");
 
         // Redirect to the product page with the id in the URL
-        window.location.href = "./product.php?id="+id;
+        window.location.href = "./product.php?id="+id.slice(7);
     }
     
 }).on("click", ".item_box__button.link", function() {
     var link = $(this).data("link");
     window.location.href = link;
 });
+
 
 
 
