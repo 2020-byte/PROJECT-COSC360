@@ -1,0 +1,63 @@
+<?php
+// Load the environment variables from the .env file
+$env = parse_ini_file('../.env');
+
+// Set the environment variables as PHP constants
+foreach ($env as $key => $value) {
+    putenv("$key=$value");
+    $_ENV[$key] = $value;
+}
+
+// Get the values of the environment variables
+$host = $_ENV['DB_HOST'];
+$user = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASSWORD'];
+$dbname = $_ENV['DB_DATABASE'];
+
+$conn = mysqli_connect($host, $user, $password, $dbname);
+
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+
+    // Check if the form was submitted
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        
+        // Get the form data
+        $rating = $_POST["rating"];
+        $review = $_POST["review"];
+        $itemId = $_POST["itemId"];
+        // Start session
+        session_start();
+
+        // Check if user is already logged in
+        if (isset($_SESSION['user_id'])) {
+            $userId = $_SESSION['user_id'];
+        }
+
+        
+        // Check if the title and description are not empty
+        if(!empty($rating) && !empty($review)){
+            
+            // Prepare the SQL statement
+            $sql = "INSERT INTO opinions (rating, review, userId, itemId) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param("ssii", $rating, $review, $userId, $itemId);
+
+            // Execute the statement
+            if ($stmt->execute() === TRUE) {
+                header("Location: ../page/product.php?id=".$itemId);
+
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+            
+            // Close the statement and connection
+            $stmt->close();
+            $conn->close();
+        }
+    }
+?>

@@ -28,9 +28,9 @@
     <div class="mx-auto p-4" style="max-width:1200px; height: 100%;">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="home.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="productSearch.html">Product Search</a></li>
-                <li class="breadcrumb-item"><a href="product.html?id=1">Product?id = 1</a></li>
+                <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                <li class="breadcrumb-item"><a href="productSearch.php">Product Search</a></li>
+                <li class="breadcrumb-item"><a id="productLink" href="product.html?id=1">Product?id = 1</a></li>
                 <li class="breadcrumb-item active" aria-current="Product">Review</li>
             </ol>
         </nav>
@@ -103,6 +103,7 @@
       $("#username").val(userId);
       $("#rating").val(rating);
       $("#review").val(review);
+      
 
       showTitle(itemId);
       showUsername(userId);
@@ -130,6 +131,8 @@ const showTitle = (itemId) => {
         // Update the HTML with the fetched data
         console.log(response.title);
         $("#itemTitle").text(response.title);
+        $("#productLink").text(response.title);
+        $("#productLink").attr('href', `product.php?id=${itemId}`);
 
     },
     error: function(xhr, status, error) {

@@ -90,7 +90,6 @@ const showOpinion = (opinions) => {
 
   Promise.all(promises).then(reponses => {
     opinionList_html = opinionList_html.concat(lastPart);
-    console.log(opinionList_html);
     $('#opinionList').html(
       opinionList_html
     )

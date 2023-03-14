@@ -26,6 +26,7 @@ session_start();
 if (isset($_SESSION['user_id'])) {
   echo '<script>user.signIn("username","'.$_SESSION['email'].'", true);</script>';
   echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
+  echo '<script>const user_id = '.$_SESSION['user_id'].'</script>';
 }
 
 ?>
@@ -41,7 +42,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="mx-auto p-4" style=" max-width:1200px; background-color: rgb(243, 240, 240);">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                 <li class="breadcrumb-item"><a href="productSearch.php">Product Search</a></li>
                 <li class="breadcrumb-item active" aria-current="Product">Product</li>
             </ol>
@@ -57,7 +58,10 @@ if (isset($_SESSION['user_id'])) {
 <hr>
         <link rel="stylesheet" href="../component/opinions/opinions.css">
         <div id="opinionList">
-            <script src="../component/opinions/opinionss.js"></script>
+            <script>
+              
+            </script>
+            <script src="../component/opinions/opinions.js"></script>
             
         </div>
 
@@ -67,10 +71,21 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-        <form class="my-4 d-flex flex-column gap-3">
+        <form method="POST" action="../database/review.php" class="my-4 d-flex flex-column gap-3">
+        <input type="hidden" name="itemId">
+        <script>
+          $(document).ready(function() {
+              $('input[name="itemId"]').val(itemId);
+              console.log(itemId);
+
+
+          });
+        </script>
+        
+
             <div class="form-group d-flex align-items-center gap-3">
                 <label for="rating" class="ms-3">Rating</label>
-                <select class="form-control" id="rating">
+                <select name="rating" class="form-control" id="rating">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -80,9 +95,9 @@ if (isset($_SESSION['user_id'])) {
               </div>
             <div class="form-group">
               <label for="review" style="display: none;">Review</label>
-              <textarea class="form-control" id="review" rows="6" placeholder="Review"></textarea>
+              <textarea name="review" class="form-control" id="review" rows="6" placeholder="Review"></textarea>
             </div>
-            <button type="button" class="btn btn-outline-primary w-100">Submit</button>
+            <button type="submit" class="btn btn-outline-primary w-100">Submit</button>
         </form>
     </div>
 
