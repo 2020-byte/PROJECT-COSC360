@@ -1,15 +1,3 @@
-<?php
-// Start session
-session_start();
-
-// Check if user is already logged in
-if (isset($_SESSION['user_id'])) {
-  // Redirect to authorized page
-  header("Location: ./index.php");
-  exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,6 +16,104 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../Auth/auth.js"></script>
 </head>
+
+<script>
+    const showMessage = (error_message) => {
+        alert(error_message);
+
+    }
+</script>
+
+<?php
+// Load the environment variables from the .env file
+$env = parse_ini_file('../.env');
+
+// Set the environment variables as PHP constants
+foreach ($env as $key => $value) {
+    putenv("$key=$value");
+    $_ENV[$key] = $value;
+}
+
+// Get the values of the environment variables
+$host = $_ENV['DB_HOST'];
+$user = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASSWORD'];
+$dbname = $_ENV['DB_DATABASE'];
+
+$conn = mysqli_connect($host, $user, $password, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+  // Start session
+  session_start();
+
+  // Check if user is already logged in
+  if (isset($_SESSION['user_id'])) {
+    // Redirect to authorized page
+    header("Location: ./index.php");
+    exit();
+  }
+
+  $error_message = "";
+
+    // Check if login form was submitted
+if (isset($_POST['signup'])) {
+    // Check if email and password are set and not empty
+    if (!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['username'])) {
+      // Check if email and password are valid
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+      $username = $_POST['username'];
+
+      $email_query = "SELECT * FROM users WHERE email='$email'";
+        $email_result = mysqli_query($conn, $email_query);
+
+        if (mysqli_num_rows($email_result) > 0) {
+            // Email already exists
+            $error_message = "Email already exists.";
+
+        }else {
+            // Check if username already exists
+            $username_query = "SELECT * FROM users WHERE username='$username'";
+            $username_result = mysqli_query($conn, $username_query);
+
+            if (mysqli_num_rows($username_result) > 0) {
+                // Username already exists
+                $error_message =  "Username already exists.";
+            } else {
+                // Email and username are unique, insert new user data into database
+                $insert_query = "INSERT INTO users (email, password, username) VALUES ('$email', '$password', '$username')";
+                mysqli_query($conn, $insert_query);
+
+                // Prepare and execute SQL query to check if email and password match
+                $stmt = $conn->prepare('SELECT id FROM users WHERE email = ? AND password = ?');
+                $stmt->bind_param('ss', $email, $password);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                $row = $result->fetch_assoc();
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['email'] = $email;
+  
+        // Redirect to authorized page
+        header("Location: ./index.php");
+        exit();
+            }
+        }
+    } else {
+        // Email, password, or username was empty
+        $error_message =  "Please fill in all fields.";
+    }
+  
+  }
+  if($error_message != "") echo '<script>showMessage("' . $error_message . '")</script>';
+
+
+?>
+
+
 <body style="height:100vh;">
 
     <!-- Header Search Bar -->
@@ -61,24 +147,24 @@ if (isset($_SESSION['user_id'])) {
         <section id="signInForm">
             <div class="form-box">
                 <div class="form-value">
-                    <form action="">
+                    <form method="POST">
                         <h2>Sign Up</h2>
                         <div class="inputbox">
                             <ion-icon name="mail-outline"></ion-icon>
-                            <input id="form2Email" type="email" required>
+                            <input id="form2Email" type="email" name="email" required>
                             <label for="form2Email">Email</label>
                         </div>
                         <div class="inputbox">
                             <ion-icon name="lock-closed-outline"></ion-icon>
-                            <input id="form2Password" type="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,29}$"  title="Minimum 8 and Maximum 30 Characters, Containing Uppercase, Lowercase, and Numeric Characters"> 
+                            <input id="form2Password" type="password" name="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,29}$"  title="Minimum 8 and Maximum 30 Characters, Containing Uppercase, Lowercase, and Numeric Characters"> 
                             <label for="form2Password">Password</label>
                         </div>
                         <div class="inputbox">
                             <ion-icon name="person-outline"></ion-icon>
-                            <input id="form2Username" name="form2Username" type="text" required pattern="^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{3,29}$" title="Minimum 3 and Maximum 30 Characters, and Alphanumeric/Period Characters Allowed, No Leading/Trailing Dots, No Consecutive Dots.">
+                            <input id="form2Username" name="username" type="text" required pattern="^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{3,29}$" title="Minimum 3 and Maximum 30 Characters, and Alphanumeric/Period Characters Allowed, No Leading/Trailing Dots, No Consecutive Dots.">
                             <label id="usernameLabel" for="form2Username">Username</label>
                         </div>
-                        <button id="signButton">Sign Up</button>
+                        <button id="signButton" type="submit" name="signup">Sign Up</button>
                         <div class="register">
                             <p>Already have a account? <a href="./login.html">Sign In</a></p>
                         </div>
@@ -103,7 +189,7 @@ if (isset($_SESSION['user_id'])) {
 <div id="offCanvas"></div>
 
 
-<script>
+<!-- <script>
     $('#signButton').click(() => {
         let isValid = false;
         isValid = $('#form2Username').get(0).checkValidity() && $('#form2Email').get(0).checkValidity() && $('#form2Password').get(0).checkValidity();
@@ -120,7 +206,7 @@ if (isset($_SESSION['user_id'])) {
     })
 
     
-</script>
+</script> -->
 
 </body>
 </html>
