@@ -1,38 +1,3 @@
-<?php
-// Start session
-session_start();
-
-// Check if user is already logged in
-if (isset($_SESSION['user_id'])) {
-  // Redirect to authorized page
-  header("Location: ./index.php");
-  exit();
-}
-
-
-// Check if login form was submitted
-if (isset($_POST['login'])) {
-  // Check if username and password are valid
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-
-  if ($email === 'admin@gmail.com' && $password === 'Password1234') {
-    // Authentication successful, set session variables
-    $_SESSION['user_id'] = 1;
-    $_SESSION['email'] = $email;
-
-    // Redirect to authorized page
-    header("Location: ./index.php");
-    exit();
-  } else {
-    // Authentication failed, display error message
-    $error_message = "Invalid username or password.";
-    echo '<script>console.log("'.$error_message.'");</script>';
-  }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,6 +15,96 @@ if (isset($_POST['login'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../Auth/auth.js"></script>
 </head>
+<script>
+    const showMessage = (error_message) => {
+        alert(error_message);
+
+    }
+</script>
+
+<?php
+// Load the environment variables from the .env file
+$env = parse_ini_file('../.env');
+
+// Set the environment variables as PHP constants
+foreach ($env as $key => $value) {
+    putenv("$key=$value");
+    $_ENV[$key] = $value;
+}
+
+// Get the values of the environment variables
+$host = $_ENV['DB_HOST'];
+$user = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASSWORD'];
+$dbname = $_ENV['DB_DATABASE'];
+
+$conn = mysqli_connect($host, $user, $password, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+  // Start session
+  session_start();
+
+  // Check if user is already logged in
+  if (isset($_SESSION['user_id'])) {
+    // Redirect to authorized page
+    header("Location: ./index.php");
+    exit();
+  }
+
+  // Check if login form was submitted
+if (isset($_POST['login'])) {
+    // Check if email and password are set and not empty
+    if (!empty($_POST['email']) && !empty($_POST['password'])) {
+      // Check if email and password are valid
+      $email = $_POST['email'];
+      $password = $_POST['password'];
+  
+  
+      // Prepare and execute SQL query to check if email and password match
+      $stmt = $conn->prepare('SELECT id FROM users WHERE email = ? AND password = ?');
+      $stmt->bind_param('ss', $email, $password);
+      $stmt->execute();
+      $result = $stmt->get_result();
+  
+      // Check if a row was returned
+      if ($result->num_rows == 1) {
+        // Authentication successful, set session variables
+        $row = $result->fetch_assoc();
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['email'] = $email;
+  
+        // Redirect to authorized page
+        header("Location: ./index.php");
+        exit();
+      } else {
+        // Authentication failed, display error message
+        $error_message = "Invalid username or password.";
+        echo '<script>console.log("'.$error_message.'");</script>';
+        echo '<script>showMessage("' . $error_message . '")</script>';
+
+
+        
+    }
+  
+      // Close database connection
+      mysqli_close($conn);
+    } else {
+      // Email and/or password inputs are empty, display error message
+      $error_message = "Please enter a valid email and password.";
+      echo '<script>console.log("'.$error_message.'");</script>';
+    }
+  }
+
+
+
+
+?>
+
+
+
 <body style="height:100vh;">
 
     <!-- Header Search Bar -->
@@ -139,3 +194,12 @@ if (isset($_POST['login'])) {
 
 </body>
 </html>
+
+
+
+<?php
+
+
+
+
+?>
