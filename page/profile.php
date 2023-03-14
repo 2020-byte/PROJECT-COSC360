@@ -17,6 +17,18 @@
     <script src="../Auth/auth.js"></script>
 </head>
 <body style="height:100vh;">
+<div id="offCanvas"></div>
+<?php
+// Start session
+session_start();
+
+// Check if user is already logged in
+if (isset($_SESSION['user_id'])) {
+  echo '<script>user.signIn("username","'.$_SESSION['email'].'", true);</script>';
+  echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
+}
+
+?>
 
     <!-- Header Search Bar -->
     
@@ -45,23 +57,23 @@
         "
         class="mx-auto p-5"
         >
-            <form>
+            <form method="POST" action="../database/editProfile.php">
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  <input type="text" name="username" id="form2Username" class="form-control" value="Ex Username" required />
-                  <label style="display:none;" class="form-label" for="form2Username">Username</label>
+                  <input type="text" name="username" id="form2Username" class="form-control" value="Ex Username" placeholder="username" />
+                  <label style="display:none;" class="form-label" for="form2Username"></label>
                 </div>
               
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                  <input type="password" name="password" id="form2Password" class="form-control" value="Ex Password" required />
-                  <label style="display:none;" class="form-label" for="form2Password">Password</label>
+                  <input type="password" name="password" id="form2Password" class="form-control" placeholder="password"  />
+                  <label style="display:none;" class="form-label" for="form2Password" ></label>
                 </div>
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" id="form2Email" class="form-control" value="Ex Email address" />
-                    <label  style="display:none;"  class="form-label" for="form2Email">Email address</label>
+                    <input name="email" type="email" id="form2Email" class="form-control" palceholder="Email address" />
+                    <label  style="display:none;"  class="form-label" for="form2Email"></label>
                 </div>
               
                 <!-- Submit button -->
@@ -77,7 +89,37 @@
 
 
 
-    <div id="offCanvas"></div>
+    
+
+
+    <script>
+          $(document).ready(function() {
+
+  $.ajax({
+    url: "../database/users.php",
+    type: "GET",
+    dataType: "json",
+
+    success: function(response) {
+        // Update the HTML with the fetched data
+        // $("#username").text(response.username);
+        console.log(response);
+        $('#form2Username').val(response.username);
+        $('#form2Email').val(response.email);
+
+
+
+    },
+    error: function(xhr, status, error) {
+        // Handle errors here
+        console.log("Error: " + error);
+    }
+});
+})
+
+
+
+        </script>
 
         
 </body>

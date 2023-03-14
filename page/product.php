@@ -17,7 +17,7 @@
     <script src="../Auth/auth.js"></script>
 </head>
 <body style="height:100vh;">
-
+<div id="offCanvas"></div>
 <?php
 // Start session
 session_start();
@@ -109,7 +109,7 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-    <div id="offCanvas"></div>
+    
 
 </body>
 </html>

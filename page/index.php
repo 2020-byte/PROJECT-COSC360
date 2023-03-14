@@ -18,7 +18,7 @@
     <script src="../Auth/auth.js"></script>
 </head>
 <body>
-    
+<div id="offCanvas"></div>
 <?php
 // Start session
 session_start();
@@ -77,7 +77,7 @@ body.offcanvas-open {
         <script src="../component/footer/footer.js"></script>
     </div>
 
-    <div id="offCanvas"></div>
+    
 
     
         

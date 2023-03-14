@@ -92,9 +92,6 @@ const logOut = () => {
     }
 };
 
-$(document).ready(() => {
-    $('#signOut').click(logOut);
-});
 
 
 
@@ -108,19 +105,33 @@ const urlParams = new URLSearchParams(window.location.search);
 
 $('#searchbar').val(search);
 
-$(`#offCanvas`).html(
-    `
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" >
-        <div class="offcanvas-header p-2">
-            <h6 class="offcanvas-title" id="offcanvasLabel">Welcome!</h6>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" ></button>
+$(document).ready(() => {
+    $(`#offCanvas`).html(
+        `
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" >
+            <div class="offcanvas-header p-2">
+                <h6 class="offcanvas-title" id="offcanvasLabel">Welcome!</h6>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" ></button>
+            </div>
+            <hr class="mx-0 w-75">
+    
+                       
+            <a  href=${
+                auth.auth?'./users.php': user.user?'./profile.php':'./signup.php'
+            }>
+                ${auth.auth?'Managing Users':user.user?`Edit Profile`: `Create Free Account`}
+            </a>
+            <a style="cursor:pointer;" id="logOut"
+                        
+            ${user.user?'':"href='./login.php'"}
+            >
+            ${user.user?`Sign out`:`Sign In`}
+            </a>
+        </li>      
         </div>
-        <hr class="mx-0 w-75">
-        <a href="./signup.php">Create Free Account</a>
-        <a href="./login.php">Sign In</a>
-    </div>
-    `
-)
+        `
+    )
+})
 
 $("nav form button").click(e => {
     e.preventDefault();
@@ -146,6 +157,11 @@ $(document).click(e => {
     }
 });
 
+
+$(document).ready(() => {
+    $('#signOut').click(logOut);
+    $('#logOut').click(logOut);
+});
 
 
 

@@ -19,14 +19,25 @@ $conn = mysqli_connect($host, $user, $password, $dbname);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
-$itemId = $_GET['id'];
+
+
+
+// Start session
+session_start();
+
+// Check if user is already logged in
+if (isset($_SESSION['user_id'])) {
+    $userId = $_SESSION['user_id'];
+} else {
+    $userId = $_GET['id'];
+
+}
 
 
 // Prepare and execute the SQL query
 $stmt = $conn->prepare("SELECT email, username, id, status FROM users WHERE id = ?");
 // $stmt = $conn->prepare("SELECT * FROM opinions");
 
-$userId = $_GET['id'];
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 

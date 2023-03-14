@@ -1,3 +1,15 @@
+<?php
+// Start session
+session_start();
+
+// Check if user is already logged in
+if (isset($_SESSION['user_id'])) {
+  // Redirect to authorized page
+  header("Location: ./index.php");
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
