@@ -64,10 +64,25 @@
             </tbody>
             </table>
 
-        <form class="my-4 d-flex flex-column gap-3">
-            <div class="form-group d-flex align-items-center gap-3">
+        <form  method="POST" action="../database/edit.php" class="my-4 d-flex flex-column gap-3">
+        <input type="hidden" name="opinionId">
+        <input type="hidden" name="userId">
+        <input type="hidden" name="itemId">
+        <script>
+          const urlParamsId = new URLSearchParams(window.location.search);
+        const id = urlParamsId.get('id');
+          $(document).ready(function() {
+              $('input[name="opinionId"]').val(id);
+              console.log(id);
+
+
+          });    </script>
+        
+        
+        
+        <div class="form-group d-flex align-items-center gap-3">
                 <label for="rating" class="ms-3">Rating</label>
-                <select class="form-control" id="rating">
+                <select name="rating" class="form-control" id="rating">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -77,11 +92,11 @@
               </div>
             <div class="form-group">
               <label for="review" style="display: none;">Review</label>
-                <textarea class="form-control" rows="6" id="review"></textarea>
+                <textarea name="review" class="form-control" rows="6" id="review"></textarea>
             </div>
             <div class="d-flex gap-2 flex-md-row flex-column">
-                <button type="button" class="btn btn-outline-primary w-100">Edit</button>
-                <button type="button" class="btn btn-outline-primary w-100">Delete</button>
+                <button type="submit" name="action" value="edit" class="btn btn-outline-primary w-100">Edit</button>
+                <button type="submit" name="action" value="delete" class="btn btn-outline-primary w-100">Delete</button>
             </div>
         </form>
 
@@ -103,6 +118,9 @@
       $("#username").val(userId);
       $("#rating").val(rating);
       $("#review").val(review);
+      $('input[name="userId"]').val(userId);
+      $('input[name="itemId"]').val(itemId);
+              console.log(userId);
       
 
       showTitle(itemId);
