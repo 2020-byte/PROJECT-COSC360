@@ -127,7 +127,7 @@ if (isset($_POST['signup'])) {
 
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="home.php">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="Sign In">Sign Up</li>
             </ol>
         </nav>
@@ -166,7 +166,7 @@ if (isset($_POST['signup'])) {
                         </div>
                         <button id="signButton" type="submit" name="signup">Sign Up</button>
                         <div class="register">
-                            <p>Already have a account? <a href="./login.html">Sign In</a></p>
+                            <p>Already have a account? <a href="./login.php">Sign In</a></p>
                         </div>
                     </form>
                 </div>

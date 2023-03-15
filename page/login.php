@@ -81,7 +81,7 @@ if (isset($_POST['login'])) {
         exit();
       } else {
         // Authentication failed, display error message
-        $error_message = "Invalid username or password.";
+        $error_message = "Invalid email or password.";
         echo '<script>console.log("'.$error_message.'");</script>';
         echo '<script>showMessage("' . $error_message . '")</script>';
 
@@ -118,7 +118,7 @@ if (isset($_POST['login'])) {
 
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="home.php">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="Sign In">Sign In</li>
             </ol>
         </nav>
@@ -150,11 +150,11 @@ if (isset($_POST['login'])) {
                             <label for="form2Password">Password</label>
                         </div>
                         <div class="forget">
-                            <a href="./lost.html">Forget Password</a>
+                            <a href="./lost.php">Forget Password</a>
                         </div>
                         <button id="signButton" type="submit" name="login">Log In</button>
                         <div class="register">
-                            <p>Don't have a account? <a href="./signup.html">Register</a></p>
+                            <p>Don't have a account? <a href="./signup.php">Register</a></p>
                         </div>
                     </form>
                 </div>

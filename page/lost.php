@@ -16,6 +16,132 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../Auth/auth.js"></script>
 </head>
+<script>
+    const showMessage = (error_message) => {
+        alert(error_message);
+
+    }
+    const showEmail = (email) => {
+        $(document).ready(() => {
+            $("#form2Email").val(email);
+            $("#sendCodeButton").html("Resend");
+        })
+    }
+</script>
+<?php
+// Load the environment variables from the .env file
+$env = parse_ini_file('../.env');
+
+// Set the environment variables as PHP constants
+foreach ($env as $key => $value) {
+    putenv("$key=$value");
+    $_ENV[$key] = $value;
+}
+
+// Get the values of the environment variables
+$host = $_ENV['DB_HOST'];
+$user = $_ENV['DB_USER'];
+$password = $_ENV['DB_PASSWORD'];
+$dbname = $_ENV['DB_DATABASE'];
+
+$conn = mysqli_connect($host, $user, $password, $dbname);
+
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+  // Start session
+  session_start();
+
+  // Check if user is already logged in
+  if (isset($_SESSION['user_id'])) {
+    // Redirect to authorized page
+    header("Location: ./index.php");
+    exit();
+  }
+
+  // Check if login form was submitted
+if (isset($_POST['sendCode'])) {
+    // Check if email and password are set and not empty
+    if (!empty($_POST['email'])) {
+      // Check if email and password are valid
+      $email = $_POST['email'];
+  
+  
+      // Prepare and execute SQL query to check if email and password match
+      $stmt = $conn->prepare('SELECT id FROM users WHERE email = ?');
+      $stmt->bind_param('s', $email);
+      $stmt->execute();
+      $result = $stmt->get_result();
+  
+      // Check if a row was returned
+      if ($result->num_rows == 1) {
+        // Authentication successful, set session variables
+        $row = $result->fetch_assoc();
+        
+  
+        $random_number = random_int(1000, 9999);
+        echo '<script>console.log("'.$random_number.'")</script>';
+        echo '<script>showEmail("'.$email.'");</script>';
+      } else {
+        // Authentication failed, display error message
+        $error_message = "Invalid email.";
+        echo '<script>console.log("'.$error_message.'");</script>';
+        echo '<script>showMessage("' . $error_message . '")</script>';
+
+
+        
+    }
+  
+      // Close database connection
+      mysqli_close($conn);
+    } else {
+      // Email and/or password inputs are empty, display error message
+      $error_message = "Please enter a valid email.";
+      echo '<script>console.log("'.$error_message.'");</script>';
+      
+    }
+  }
+  else if(isset($_POST['login'])) {
+    echo '<script>console.log("'.$random_number.'")</script>';
+    if (!empty($_POST['code']) && $_POST['code'] == $random_number) {
+        // Prepare and execute SQL query to check if email and password match
+      $stmt = $conn->prepare('SELECT id FROM users WHERE email = ?');
+      $stmt->bind_param('s', $email);
+      $stmt->execute();
+      $result = $stmt->get_result();
+  
+      // Check if a row was returned
+      if ($result->num_rows == 1) {
+        // Authentication successful, set session variables
+        $row = $result->fetch_assoc();
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['email'] = $email;
+  
+        // Redirect to authorized page
+        header("Location: ./index.php");
+        exit();
+    }
+  }  else {
+        // Authentication failed, display error message
+        $error_message = "Invalid Code.";
+        echo '<script>console.log("'.$error_message.'");</script>';
+        echo '<script>showMessage("' . $error_message . '")</script>';
+
+
+        
+    }
+  }
+
+
+
+
+?>
+
+
+
+
+
 <body style="height:100vh;">
 
     <!-- Header Search Bar -->
@@ -29,7 +155,7 @@
 
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="home.php">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="Sign In">Sign In</li>
             </ol>
         </nav>
@@ -50,27 +176,27 @@
                 <div class="form-value">
                     <div >
                         <h2>Login</h2>
-                        <form action="">
+                        <form action="" method="POST">
                             <div class="inputbox">
                                 <ion-icon name="mail-outline"></ion-icon>
-                                <input id="form2Email" type="email" required>
+                                <input id="form2Email" type="email" name="email" required>
                                 <label for="form2Email">Email</label>
                             </div>
-                            <button id="sendCodeButton" >Send Code</button>
+                            <button type="submit" name="sendCode" id="sendCodeButton" >Send Code</button>
                         </form>
-                        <form action="">
+                        <form action="" method="POST">
                             <div class="inputbox">
                                 <ion-icon name="lock-closed-outline"></ion-icon>
-                                <input id="form2Code" type="password" required pattern="\d{4}"> 
+                                <input id="form2Code" type="password" name="code" required pattern="\d{4}"> 
                                 <label for="form2Code">4 digit Code</label>
                             </div>
-                            <button id="signButton" >Log In</button>
+                            <button typ="submit" name="login" id="signButton" >Log In</button>
                         </form>
                         <div class="register">
-                            <p>Don't have a account? <a href="./signup.html">Register</a></p>
+                            <p>Don't have a account? <a href="./signup.php">Register</a></p>
                         </div>
                         <div class="register">
-                            <p>Already have a account? <a href="./login.html">Sign In</a></p>
+                            <p>Already have a account? <a href="./login.php">Sign In</a></p>
                         </div>
                     </div>
                 </div>
