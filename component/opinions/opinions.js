@@ -74,7 +74,10 @@ const showOpinion = (opinions) => {
               <th scope="row">${i+1}</th>
               <td>${response.username}</td>
               <td>${rating}</td>
-              <td><a href="./opinion.php?id=${id}">${review}</a></td>
+              ${user_id == userId? `<td><a href="./opinion.php?id=${id}">${review}</a></td>`:
+              `<td><a >${review}</a></td>`
+            }
+              
           </tr>
         `);
     
@@ -98,3 +101,5 @@ const showOpinion = (opinions) => {
   
 }
     
+
+console.log(user_id);

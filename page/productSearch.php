@@ -51,11 +51,20 @@ if (isset($_SESSION['user_id'])) {
 
         <hr>
 
-        <form action="" class="d-flex justify-content-between">
+        <form  class="d-flex justify-content-between">
             <div>
+                <input id="hiddenSearch" name="search" type="hidden">
+                <script>
+
+                    $(document).ready(() => {
+
+                        $("#hiddenSearch").val(search);
+                    })
+                 
+                </script>
                 <div class="d-flex justify-content-center">
                     <label for="" class="form__label">Order by</label>
-                    <select name="" id="" class="form__select">
+                    <select name="order" id="order" class="form__select">
                         <option value="0"></option>
                         <option value="1">Price: low to high</option>
                         <option value="2">Price: high to low</option>
@@ -64,7 +73,7 @@ if (isset($_SESSION['user_id'])) {
                     </select>
                 </div>
             </div>
-            <button class="form__button">Update</button>
+            <button id="orderButton" name="order" class="form__button">Update</button>
             
         </form>
 
@@ -99,7 +108,7 @@ if (isset($_SESSION['user_id'])) {
 
         <link rel="stylesheet" href="../component/productItem/productItem.css">
         <section class="item_list d-flex flex-column gap-5">
-            <script  src="../component/productItem/productitem.js" async></script>
+            <script  src="../component/productItem/productitems.js" async></script>
         </section>
 
         <hr>

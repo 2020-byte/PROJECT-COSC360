@@ -32,6 +32,8 @@ if (isset($_SESSION['user_id'])) {
 ?>
 
 
+
+
     <!-- Header Search Bar -->
     
     <link rel="stylesheet" href="../component/searchBar/searcBar.css">
@@ -49,6 +51,7 @@ if (isset($_SESSION['user_id'])) {
         </nav>
 
         <hr>
+
 
         <link rel="stylesheet" href="../component/productInfo/productInfo.css">
         <div class="product_info">

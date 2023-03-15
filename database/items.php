@@ -22,10 +22,38 @@ if (!$conn) {
 $search = $_GET['search'];
 
 if(!$search) {
-    $sql = "SELECT * FROM items";
+    $sql = "SELECT * FROM items ORDER BY ";
 }else {
-    $sql = "SELECT * FROM items WHERE title LIKE '%" . $search . "%'";
+    $sql = "SELECT * FROM items WHERE title LIKE '%" . $search . "%' ORDER BY ";
 }
+
+
+
+if(isset($_GET['order'])) {
+
+
+    switch ($_GET['order']) {
+        case "1":
+            $sql = $sql . "price ASC";
+            break;
+        case "2":
+            $sql = $sql . "price DESC";
+            break;
+        case "3":
+            $sql = $sql . "title ASC";
+            break;
+        case "4":
+            $sql = $sql . "rating DESC";
+            break;
+        default:
+            $sql = $sql . "created_at ASC";
+            break;
+    }
+    
+}else {
+    $sql = $sql . "created_at ASC";
+}
+
 
 $result = $conn->query($sql);
 

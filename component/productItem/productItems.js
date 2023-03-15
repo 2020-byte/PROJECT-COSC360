@@ -51,25 +51,41 @@ const items_per_page = 4;
 
 
 console.log("client: "+search);
-////////////////////////////////////////////////////////////////////////////
-$.ajax({
-    url: "../database/items.php",
-    type: "GET",
-    dataType: "json",
-    data: {
-        search: search
-    },
-    success: function(response) {
-        // Update the HTML with the fetched data
-        showData(response);
-        totalPage = Math.ceil(response.length / items_per_page);
+let order = 0;
+console.log(order);
+$("#orderButton").click((e) => {
+    e.preventDefault();
 
-    },
-    error: function(xhr, status, error) {
-        // Handle errors here
-        console.log("Error: " + error);
-    }
-});
+    asyncItems(search, $('#order').val());
+})
+////////////////////////////////////////////////////////////////////////////
+const asyncItems = (search, order) => {
+
+    $.ajax({
+        url: "../database/items.php",
+        type: "GET",
+        dataType: "json",
+        data: {
+            search: search,
+            order: order,
+        },
+        success: function(response) {
+            // Update the HTML with the fetched data
+            
+            productItem_html = "";
+            $(".item_list").html("");
+            showData(response);
+            totalPage = Math.ceil(response.length / items_per_page);
+    
+        },
+        error: function(xhr, status, error) {
+            // Handle errors here
+            console.log("Error: " + error);
+        }
+    });
+}
+
+asyncItems(search, order);
 
 const showData = (items) => {
 
@@ -107,9 +123,9 @@ const showData = (items) => {
 let productItem_html ='';
 const makeHtml = (item, opinions) => {
     const limit = 140;
-    const truncatedReview = opinions.map(i => i.review.length > limit? i.review.slice(0,limit) + '...': i.review);
+    let truncatedReview = opinions.map(i => i.review.length > limit? i.review.slice(0,limit) + '...': i.review);
     let {description, detail, id, image, link, price, rating, title} = item;
-    
+
     rating_as_star = star_html.repeat(rating);
     
     productItem_html = productItem_html.concat(`
@@ -151,7 +167,6 @@ const makeHtml = (item, opinions) => {
 </div>
 </div>
     `);
-
     
     
 }

@@ -131,7 +131,7 @@ if (isset($_SESSION['user_id'])) {
       $("#review").val(review);
       $('input[name="userId"]').val(userId);
       $('input[name="itemId"]').val(itemId);
-              console.log(userId);
+
       
 
       showTitle(itemId);
