@@ -60,6 +60,7 @@ if (!$conn) {
     exit();
   }
 
+  $random_number = null;
   // Check if login form was submitted
 if (isset($_POST['sendCode'])) {
     // Check if email and password are set and not empty

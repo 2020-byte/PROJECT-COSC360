@@ -120,7 +120,7 @@ const showData = (item) => {
     const {description, detail, id, image, link, price, rating, title} = item;
 
     const rating_as_star = star_html.repeat(rating);
-
+    
 
     product_info_html = product_info_html.concat(`
     <div id="box">
@@ -150,7 +150,7 @@ const showData = (item) => {
     </main>
     <div id="item-secondDes">
         <h1 class="product-name"><code>::${title}</code></h1>
-        <p class="ACR" >${star_html}<p>
+        <p class="ACR" >${rating_as_star}<p>
         <p>${parseInt(price).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}<p>
         <blockquote>
             <p>${description}</P>
@@ -159,6 +159,7 @@ const showData = (item) => {
 </div>
 
     `);
+
 
 }
 
