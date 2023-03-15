@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../Auth/auth.js"></script>
+    <script src="../Auth/auths.js"></script>
 </head>
 <body>
 <div id="offCanvas"></div>
@@ -23,13 +23,27 @@
 // Start session
 session_start();
 
+
 // Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
   echo '<script>user.signIn("username","'.$_SESSION['email'].'", true);</script>';
   echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
-}
 
+  if ($_SESSION['user_id'] == 1 ) {
+    echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
+
+
+    echo '<script>auth.signIn("username","'.$_SESSION['email'].'", true, true);</script>';
+
+}
+} 
 ?>
+
+<script>
+    console.log(auth.auth);
+</script>
+
+
 
 
 

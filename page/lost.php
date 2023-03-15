@@ -29,6 +29,9 @@
     }
 </script>
 <?php
+
+
+
 // Load the environment variables from the .env file
 $env = parse_ini_file('../.env');
 

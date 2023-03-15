@@ -16,6 +16,40 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="../Auth/auth.js"></script>
 </head>
+<?php
+// Start session
+session_start();
+
+// Check if user is already logged in
+if (!isset($_SESSION['user_id'])) {
+  // Redirect to authorized page
+  header("Location: ./index.php");
+  exit();
+}
+
+
+
+// Check if user is already logged in
+if (isset($_SESSION['user_id'])) {
+
+
+
+  echo '<script>user.signIn("username","'.$_SESSION['email'].'", true);</script>';
+  echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
+
+  if ($_SESSION['user_id'] == 1 ) {
+    echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
+
+
+    echo '<script>auth.signIn("username","'.$_SESSION['email'].'", true, true);</script>';
+
+}else {
+    // Redirect to authorized page
+  header("Location: ./index.php");
+  exit();
+}
+} 
+?>
 <body style="height:100vh;">
 
     <!-- Header Search Bar -->
@@ -48,21 +82,24 @@
         <div class="input-groupd d-flex gap-3 flex-column flex-md-row">
                 <div class="form-outline d-flex align-items-md-center gap-3">
                     <label for="form1">Username</label>
-                  <input type="search" id="form1" class="form-control" />
+                  <input type="search" id="username" class="form-control" />
                 </div>
 
                 <div class="form-outline d-flex align-items-md-center gap-3">
                     <label class="form-label" for="form1">Email</label>
-                  <input type="search" id="form1" class="form-control" />
+                  <input type="search" id="email" class="form-control" />
                 </div>
               
 
-              <button type="button" class="btn btn-primary">
+              <button id="searchButton" type="button" class="btn btn-primary">
                 <i class="fas fa-search"></i>
               </button>
         </div>
 
-        <table class="table table-striped">
+        <script>
+            let userTable_html = "";
+             let userTable_Starthtml = `
+            <table id="userTable" class="table table-striped">
             <thead>
               <tr>
                 <th scope="col">#</th>
@@ -72,29 +109,121 @@
               </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Dog</td>
-                    <td>dog@gmail.com</td>
-                    <td>Active</td>
+
+            `
+
+            const showData = (response) => {
+                for(let i = 0; i < response.length; i++) {
+                    let {id, username, email, status} = response[i];
+                    userTable_html = userTable_html.concat(`
+                    <tr>
+                    <th scope="row">${i+1}</th>
+                    <td>${username}</td>
+                    <td>${email}</td>
+                    <td class="userId" id="${id}" data-status="${status}" style="cursor:pointer; color: ${status==1?"green":"red"}">${status==1?"Active": "disabled"}</td>
+                    <style>
+                    .userId:hover { 
+                        font-size:1.2rem; 
+                       }
+                    </style>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Cat</td>
-                    <td>cat@gmail.com</td>
-                    <td>Active</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Pig</td>
-                    <td>pig@gmail.com</td>
-                    <td>Active</td>
-                </tr>
-                <th scope="row">4</th>
-                    <td>Horse</td>
-                    <td>horse@gmail.com</td>
-                    <td>Disabled</td>
-            </tbody>
+                    `)
+                }
+            }
+
+            $(document).ready(() => {
+                $(".userId").click((e) => {
+                const id = $(e.target).attr("id");
+                console.log(id);
+                const status = $(e.target).attr("data-status");
+                // Get the query string
+                var queryString = window.location.search;
+                $.ajax({
+                url:  "../database/changeStatus.php",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    userId: id,
+                    status: status,
+                },
+                success: function(response) {
+                    // Update the HTML with the fetched data
+                    console.log("changed");
+                    // Redirect to the same page with the query string
+                    window.location.href = window.location.pathname + queryString;
+                
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors here
+                    console.log("Error: " + error);
+                    console.log(xhr);
+                    window.location.href = window.location.pathname + queryString;
+
+                }
+                });
+            });
+
+            })
+
+            let username = "";
+            let email = "";
+
+            const asyncData = (username, email) => {
+                $.ajax({
+                url:  "../database/manageUsers.php",
+                type: "GET",
+                dataType: "json",
+                data: {
+                    username: username,
+                    email: email,
+                },
+                success: function(response) {
+                    // Update the HTML with the fetched data
+                    userTable_html = userTable_Starthtml;
+                    showData(response);
+
+                    userTable_html = userTable_html.concat("</tbody>");
+                    $("#userTable").html(userTable_html);
+                
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors here
+                    console.log("Error: " + error);
+                }
+                });
+            }
+
+            
+
+            $(document).ready(function() {
+                $("#searchButton").click(() => {
+                
+                    username = $("#username").val();
+                    email = $("#email").val();
+                    console.log(username);
+                    asyncData(username, email);
+                });
+
+                $('#username, #email').keypress(function(e) {
+                if (e.keyCode == 13) {
+                    $('#searchButton').click();
+                }
+                });
+            });
+
+            asyncData(username, email);
+           
+
+           
+
+           
+           
+        </script>
+
+        <table id="userTable" class="table table-striped">
+            
+            
+            
             </table>
 
 

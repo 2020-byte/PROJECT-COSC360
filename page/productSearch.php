@@ -24,12 +24,20 @@
 // Start session
 session_start();
 
+
 // Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
   echo '<script>user.signIn("username","'.$_SESSION['email'].'", true);</script>';
   echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
-}
 
+  if ($_SESSION['user_id'] == 1 ) {
+    echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
+
+
+    echo '<script>auth.signIn("username","'.$_SESSION['email'].'", true, true);</script>';
+
+}
+} 
 ?>
 
 

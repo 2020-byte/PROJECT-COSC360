@@ -101,10 +101,11 @@ $('#headerSearchBar').html(
     `
 )
 const urlParams = new URLSearchParams(window.location.search);
-    const search = urlParams.get('search');
-    $("#hiddenSearch").val(search);
+const search = urlParams.get('search');
+    
 
 $('#searchbar').val(search);
+
 
 $(document).ready(() => {
     $(`#offCanvas`).html(
