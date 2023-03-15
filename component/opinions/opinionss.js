@@ -40,7 +40,7 @@ $.ajax({
   },
   success: function(response) {
     // Update the HTML with the fetched data]
-
+    console.log(response);
     showOpinion(response);
 
     
@@ -52,14 +52,14 @@ $.ajax({
   }
 });
 
-const showOpinion = (opinions) => {
+const showOpinion = async (opinions) => {
   opinionList_html = firstPart;
 
   const promises = [];
   for(let i = 0; i <opinions.length; i++) {
     const {id, review, rating, userId, itemId} = opinions[i];
     
-    const promise = $.ajax({
+    const promise = await $.ajax({
       url:  "../database/users.php",
       type: "GET",
       dataType: "json",
@@ -69,9 +69,7 @@ const showOpinion = (opinions) => {
       },
       success: function(response) {
         // Update the HTML with the fetched data
-        console.log("check");
-        console.log(userId);
-        console.log(response.username);
+
         
         opinionList_html = opinionList_html.concat(`
           <tr id="${id}" data-userId="${userId}">
@@ -93,6 +91,9 @@ const showOpinion = (opinions) => {
     });
 
     promises.push(promise);
+    //그냥 promise를 배열에 담으면 promise.all의 then 안에 있는 것만
+    //promise 다음 순서로 시작함 나머지들은 비동기적으로 실행됨.
+    //그래서 다음 next loop가 먼저 시작해서 promise 배열안에 순서가 뒤죽박죽됨.
   }
 
   Promise.all(promises).then(reponses => {
