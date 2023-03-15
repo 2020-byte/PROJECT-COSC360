@@ -22,7 +22,7 @@ if (!$conn) {
 
 
 // Prepare and execute the SQL query
-$stmt = $conn->prepare("SELECT * FROM opinions WHERE itemId = ? ORDER BY created_at ASC;");
+$stmt = $conn->prepare("SELECT * FROM opinions WHERE itemId = ? ORDER BY created_at DESC;");
 // $stmt = $conn->prepare("SELECT * FROM opinions");
 
 

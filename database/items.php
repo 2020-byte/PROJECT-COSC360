@@ -46,12 +46,12 @@ if(isset($_GET['order'])) {
             $sql = $sql . "rating DESC";
             break;
         default:
-            $sql = $sql . "created_at ASC";
+            $sql = $sql . "created_at DESC";
             break;
     }
     
 }else {
-    $sql = $sql . "created_at ASC";
+    $sql = $sql . "created_at DESC";
 }
 
 

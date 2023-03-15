@@ -65,7 +65,7 @@ if (isset($_SESSION['user_id'])) {
                 <div class="d-flex justify-content-center">
                     <label for="" class="form__label">Order by</label>
                     <select name="order" id="order" class="form__select">
-                        <option value="0"></option>
+                        <option value="0">Latest date</option>
                         <option value="1">Price: low to high</option>
                         <option value="2">Price: high to low</option>
                         <option value="3">Name</option>
