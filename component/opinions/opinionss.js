@@ -64,17 +64,21 @@ const showOpinion = (opinions) => {
       type: "GET",
       dataType: "json",
       data: {
-          id: userId
+          id: userId,
+          forOpinions: 1,
       },
       success: function(response) {
         // Update the HTML with the fetched data
+        console.log("check");
+        console.log(userId);
+        console.log(response.username);
         
         opinionList_html = opinionList_html.concat(`
           <tr id="${id}" data-userId="${userId}">
               <th scope="row">${i+1}</th>
               <td>${response.username}</td>
               <td>${rating}</td>
-              ${user_id == userId? `<td><a href="./opinion.php?id=${id}">${review}</a></td>`:
+              ${user_id == userId || user_id == 1? `<td><a href="./opinion.php?id=${id}">${review}</a></td>`:
               `<td><a >${review}</a></td>`
             }
               
@@ -103,3 +107,23 @@ const showOpinion = (opinions) => {
     
 
 console.log(user_id);
+
+const findUsername = function(userId) {
+  return new Promise(function(resolve, reject) {
+    $.ajax({
+      url: "../database/users.php",
+      type: "GET",
+      dataType: "json",
+      data: {
+        id: userId
+      },
+      success: function(response) {
+        // Resolve the Promise with the fetched data
+      },
+      error: function(xhr, status, error) {
+        // Reject the Promise with the error
+        reject(error);
+      }
+    });
+  });
+};

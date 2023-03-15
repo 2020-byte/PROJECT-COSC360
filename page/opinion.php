@@ -30,6 +30,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
 
+
 // Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
   echo '<script>user.signIn("username","'.$_SESSION['email'].'", true);</script>';

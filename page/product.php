@@ -33,8 +33,9 @@ if (!isset($_SESSION['user_id'])) {
 
 // Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
-  echo '<script>user.signIn("username","'.$_SESSION['email'].'", true);</script>';
+  echo '<script>user.signIn("username","'.$_SESSION['email'].'", '.$_SESSION['user_id'].');</script>';
   echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
+  echo '<script>const user_id = '.$_SESSION['user_id'].'</script>';
 
   if ($_SESSION['user_id'] == 1 ) {
     echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
@@ -79,7 +80,7 @@ if (isset($_SESSION['user_id'])) {
             <script>
               
             </script>
-            <script src="../component/opinions/opinions.js"></script>
+            <script src="../component/opinions/opinionss.js"></script>
             
         </div>
 

@@ -33,6 +33,10 @@ if (isset($_SESSION['user_id'])) {
 
 }
 
+if(isset($_GET['forOpinions'])) {
+    $userId = $_GET['id'];
+}
+
 
 // Prepare and execute the SQL query
 $stmt = $conn->prepare("SELECT email, username, id, status FROM users WHERE id = ?");
