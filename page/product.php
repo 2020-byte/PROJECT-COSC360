@@ -228,9 +228,7 @@ if (isset($_SESSION['user_id'])) {
 <hr>
         <link rel="stylesheet" href="../component/opinions/opinions.css">
         <div id="opinionList">
-            <script>
-              
-            </script>
+
             <script src="../component/opinions/opinions.js"></script>
             
         </div>

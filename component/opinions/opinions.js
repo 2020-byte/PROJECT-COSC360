@@ -17,6 +17,8 @@ const firstPart = `
                 <th scope="col">Username</th>
                 <th scope="col">Rating</th>
                 <th scope="col">Review</th>
+                <th scope="col">Posted Date</th>
+                <th scope="col">Updated Date</th>
               </tr>
             </thead>
             <tbody>
@@ -42,7 +44,6 @@ $.ajax({
   },
   success: function(response) {
     // Update the HTML with the fetched data]
-    console.log(response);
     showOpinion(response);
 
     
@@ -59,7 +60,7 @@ const showOpinion = async (opinions) => {
 
   const promises = [];
   for(let i = 0; i <opinions.length; i++) {
-    const {id, review, rating, userId, itemId} = opinions[i];
+    const {id, review, rating, userId, itemId, created_at, updated_at} = opinions[i];
     
     const promise = await $.ajax({
       url:  "../database/users.php",
@@ -72,7 +73,7 @@ const showOpinion = async (opinions) => {
       success: function(response) {
         // Update the HTML with the fetched data
 
-        
+        console.timeLog("date: "+created_at);
         opinionList_html = opinionList_html.concat(`
           <tr id="${id}" data-userId="${userId}">
               <th scope="row">${i+1}</th>
@@ -82,6 +83,8 @@ const showOpinion = async (opinions) => {
               `<td><a id=${response.status == 0 &&  user_id == userId ?"disabled":"abled"} >${review}</a></td>
               `
             }
+            <td>${created_at}</td>
+            <td>${updated_at}</td>
 
               
           </tr>
