@@ -64,7 +64,7 @@ if (isset($_POST['login'])) {
   
   
       // Prepare and execute SQL query to check if email and password match
-      $stmt = $conn->prepare('SELECT id FROM users WHERE email = ? AND password = ?');
+      $stmt = $conn->prepare('SELECT id, status FROM users WHERE email = ? AND password = ?');
       $stmt->bind_param('ss', $email, $password);
       $stmt->execute();
       $result = $stmt->get_result();
@@ -75,6 +75,7 @@ if (isset($_POST['login'])) {
         $row = $result->fetch_assoc();
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['email'] = $email;
+        $_SESSION['status'] = $row['status'];
   
         // Redirect to authorized page
         header("Location: ./index.php");

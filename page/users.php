@@ -20,13 +20,6 @@
 // Start session
 session_start();
 
-// Check if user is already logged in
-if (!isset($_SESSION['user_id'])) {
-  // Redirect to authorized page
-  header("Location: ./index.php");
-  exit();
-}
-
 
 
 // Check if user is already logged in
@@ -62,7 +55,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="mx-auto p-4" style="max-width:1200px; height: 100%;">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="Product">Users Info</li>
             </ol>
         </nav>

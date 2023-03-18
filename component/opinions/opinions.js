@@ -25,6 +25,8 @@ const firstPart = `
 const lastPart = `
 </tbody>
 </table>
+<style>#disabled:hover{color:red}</style>
+
 `
 
 
@@ -76,12 +78,15 @@ const showOpinion = async (opinions) => {
               <th scope="row">${i+1}</th>
               <td>${response.username}</td>
               <td>${rating}</td>
-              ${user_id == userId || user_id == 1? `<td><a href="./opinion.php?id=${id}">${review}</a></td>`:
-              `<td><a >${review}</a></td>`
+              ${response.status==1 && user_id == userId || user_id == 1? `<td><a href="./opinion.php?id=${id}">${review}</a></td>`:
+              `<td><a id=${response.status == 0 &&  user_id == userId ?"disabled":"abled"} >${review}</a></td>
+              `
             }
+
               
           </tr>
         `);
+
     
       },
       error: function(xhr, status, error) {

@@ -40,12 +40,19 @@ if (isset($_SESSION['user_id'])) {
   if ($_SESSION['user_id'] == 1 ) {
     echo '<script>console.log("'.$_SESSION['user_id'].'")</script>';
 
-
     echo '<script>auth.signIn("username","'.$_SESSION['email'].'", true, true);</script>';
 
 }
 } 
+
 ?>
+
+<script>
+  let userStatus;
+  <?php
+    echo 'userStatus='.$_SESSION['status'].';';
+  ?>
+</script>
 
 
 
@@ -80,7 +87,7 @@ if (isset($_SESSION['user_id'])) {
             <script>
               
             </script>
-            <script src="../component/opinions/opinionss.js"></script>
+            <script src="../component/opinions/opinions.js"></script>
             
         </div>
 
@@ -116,7 +123,14 @@ if (isset($_SESSION['user_id'])) {
               <label for="review" style="display: none;">Review</label>
               <textarea name="review" class="form-control" id="review" rows="6" placeholder="Review"></textarea>
             </div>
-            <button type="submit" class="btn btn-outline-primary w-100">Submit</button>
+            <?php
+
+              if($_SESSION['status'] == 0) {
+                echo '<button disabled class="btn btn-outline-danger w-100">Not allowed</button>';
+              }else {
+                echo '<button type="submit" class="btn btn-outline-primary w-100">Submit</button>';
+              }
+            ?>
         </form>
     </div>
 

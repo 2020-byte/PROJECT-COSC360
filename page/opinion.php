@@ -22,7 +22,7 @@
 session_start();
 
 // Check if user is already logged in
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])|| $_SESSION['status'] == 0) {
   // Redirect to authorized page
   header("Location: ./index.php");
   exit();
@@ -56,7 +56,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="mx-auto p-4" style="max-width:1200px; height: 100%;">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="home.php">Home</a></li>
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                 <li class="breadcrumb-item"><a href="productSearch.php">Product Search</a></li>
                 <li class="breadcrumb-item"><a id="productLink" href="product.html?id=1">Product?id = 1</a></li>
                 <li class="breadcrumb-item active" aria-current="Product">Review</li>
@@ -122,9 +122,8 @@ if (isset($_SESSION['user_id'])) {
               <label for="review" style="display: none;">Review</label>
                 <textarea name="review" class="form-control" rows="6" id="review"></textarea>
             </div>
-            <div class="d-flex gap-2 flex-md-row flex-column">
-                <button type="submit" name="action" value="edit" class="btn btn-outline-primary w-100">Edit</button>
-                <button type="submit" name="action" value="delete" class="btn btn-outline-primary w-100">Delete</button>
+            <div id="formButtonBox" class="d-flex gap-2 flex-md-row flex-column">
+                
             </div>
         </form>
 
@@ -153,6 +152,10 @@ if (isset($_SESSION['user_id'])) {
 
       showTitle(itemId);
       showUsername(userId);
+      $("#formButtonBox").html(`
+      <button type="submit" name="action" value="edit" class="btn btn-outline-primary w-100">Edit</button>
+      <button type="submit" name="action" value="delete" class="btn btn-outline-primary w-100">Delete</button>
+      `);
 
 
 
@@ -165,8 +168,8 @@ if (isset($_SESSION['user_id'])) {
 });
 
 
-const showTitle = (itemId) => {
-  $.ajax({
+const showTitle = async (itemId) => {
+  await $.ajax({
     url: "../database/item.php",
     type: "GET",
     dataType: "json",
@@ -188,8 +191,8 @@ const showTitle = (itemId) => {
 });
 }
 
-const showUsername = (userId) => {
-  $.ajax({
+const showUsername = async (userId) => {
+  await $.ajax({
     url: "../database/users.php",
     type: "GET",
     dataType: "json",

@@ -57,6 +57,7 @@ const searchbar_html = `
                         ${auth.auth?'Managing Users':user.user?`Edit Profile`: `Create Free Account`}
                     </a>
                 </li>
+
                 <li>
                     <a class="dropdown-item" id="signOut"  style="cursor:pointer;"
                     
@@ -123,6 +124,7 @@ $(document).ready(() => {
             }>
                 ${auth.auth?'Managing Users':user.user?`Edit Profile`: `Create Free Account`}
             </a>
+
             <a style="cursor:pointer;" id="logOut"
                         
             ${user.user?'':"href='./login.php'"}
