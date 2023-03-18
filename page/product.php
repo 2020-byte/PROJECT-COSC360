@@ -23,7 +23,7 @@
 session_start();
 
 // Check if user is already logged in
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || !isset($_GET['id'])) {
   // Redirect to authorized page
   header("Location: ./index.php");
   exit();
@@ -74,6 +74,150 @@ if (isset($_SESSION['user_id'])) {
         </nav>
 
         <hr>
+
+        <?php
+        if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1 && isset($_GET['id'])) {
+          
+          // Load the environment variables from the .env file
+          $env = parse_ini_file('../.env');
+
+          // Set the environment variables as PHP constants
+          foreach ($env as $key => $value) {
+              putenv("$key=$value");
+              $_ENV[$key] = $value;
+          }
+
+          // Get the values of the environment variables
+          $host = $_ENV['DB_HOST'];
+          $user = $_ENV['DB_USER'];
+          $password = $_ENV['DB_PASSWORD'];
+          $dbname = $_ENV['DB_DATABASE'];
+
+          $conn = mysqli_connect($host, $user, $password, $dbname);
+
+
+          if (!$conn) {
+              die("Connection failed: " . mysqli_connect_error());
+          }
+
+          $itemId = $_GET['id'];
+          // Prepare and execute the SQL query
+          $stmt = $conn->prepare("SELECT title, price, link, image, description, detail FROM items WHERE id = ?");
+
+          $stmt->bind_param("i", $itemId);
+          $stmt->execute();
+
+          // Get the result
+          $result = $stmt->get_result();
+
+          $row = $result->fetch_assoc();
+          
+          $title = $row['title'];
+          $price = $row['price'];
+          $link = $row['link'];
+          $image = $row['image'];
+          $description = $row['description'];
+          $detail = $row['detail'];
+
+          $stmt->close();
+          $conn->close();
+          
+          
+          
+          echo '<form id="addItem" action="../database/addItem.php" method="POST">';
+
+            
+            echo '<div class="input-group mb-3">';
+            echo '<div class="input-group-prepend">';
+            echo    '<span class="input-group-text" id="titleSpan">Title</span>';
+            echo '</div>';
+            echo '<input type="text" name="title" class="form-control" id="title" aria-describedby="titleSpan" required value="'.$title.'">';
+            echo '</div>';
+            
+            echo '<div class="input-group mb-3">';
+            echo '<div class="input-group-prepend">';
+            echo    '<span class="input-group-text">$</span>';
+            echo '</div>';
+            echo '<input type="text" name="price" class="form-control" aria-label="Amount (to the nearest dollar)" rquired value="'.$price.'">';
+            echo '<div class="input-group-append">';
+            echo    '<span class="input-group-text">.00</span>';
+            echo '</div>';
+            echo '</div>';
+            
+            echo '<div class="input-group mb-3">';
+            echo '<div class="input-group-prepend">';
+            echo    '<span class="input-group-text" id="purchaselinkSpan">Purchase Link URL</span>';
+            echo '</div>';
+            echo '<input type="text" name="link" class="form-control" id="purchaseLink" aria-describedby="purchaselinkSpan" required value="'.$link.'">';
+            echo '</div>';
+            
+            echo '<div class="input-group mb-3">';
+            echo '<div class="input-group-prepend">';
+            echo    '<span class="input-group-text" id="imageLinkSpan">Image Link URL</span>';
+            echo '</div>';
+            echo '<input type="text" name="image" class="form-control" id="imageLink" aria-describedby="imageLinkSpan" required value="'.$image.'">';
+            echo '</div>';
+
+            echo '<div class="input-group mb-3">';
+            echo    '<div class="input-group-prepend">';
+            echo        '<span class="input-group-text h-100">Description</span>';
+            echo    '</div>';
+            echo    '<textarea rows="5" name="description" class="form-control" aria-label="description" required>'.$description.'</textarea>';
+            echo '</div>';
+
+            echo '<div class="input-group mb-3">';
+            echo    '<div class="input-group-prepend">';
+            echo        '<span class="input-group-text h-100">Details</span>';
+            echo    '</div>';
+            echo    '<textarea rows="3" name="detail" class="form-control" aria-label="details" required >'.$detail.'</textarea>';
+            echo '</div>';
+
+            echo '<div class="d-flex gap-2 flex-md-row flex-column">';
+            echo '<button type="submit" name="action" value="edit" class="btn btn-outline-primary w-100 mb-3">Edit Info</button>';
+            echo '<button type="submit" name="action" value="delete" class="btn btn-outline-primary w-100 mb-3">Delete Item</button>';
+            echo '</div>';
+
+            echo '<input type="hidden" name="itemId" value="'.$itemId.'">';
+
+
+
+
+
+            echo '</form>';
+            echo '<button id="unfold" type="button" class="btn btn-outline-success w-100">Unfold</button>';
+            echo '<hr>';
+
+
+
+
+        }
+
+        ?>
+
+        <style>
+            #addItem {
+                display: none;
+            }
+        </style>
+
+        <script>
+            $("#unfold").click(function(event) {
+                
+                if ($(this).text() === 'Unfold') {
+                    $("#addItem").slideDown(1000);
+                    $(this).text('Fold');
+                    $(this).removeClass("btn-outline-success");
+                    $(this).addClass("btn-outline-danger");
+
+                } else {
+                    $("#addItem").slideUp(1000);
+                    $(this).text('Unfold');
+                    $(this).removeClass("btn-outline-danger");
+                    $(this).addClass("btn-outline-success");
+
+                }
+            });
+        </script>
 
 
         <link rel="stylesheet" href="../component/productInfo/productInfo.css">

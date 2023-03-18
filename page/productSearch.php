@@ -61,55 +61,54 @@ if (isset($_SESSION['user_id'])) {
         
         <?php
         if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1) {
-            echo '<form id="addItem" action="../database/addItem.php" metho="POST">';
+            echo '<form id="addItem" action="../database/addItem.php" method="POST">';
 
             
             echo '<div class="input-group mb-3">';
             echo '<div class="input-group-prepend">';
             echo    '<span class="input-group-text" id="titleSpan">Title</span>';
             echo '</div>';
-            echo '<input type="text" class="form-control" id="title" aria-describedby="titleSpan" required>';
+            echo '<input type="text" name="title" class="form-control" id="title" aria-describedby="titleSpan" required>';
             echo '</div>';
             
+            echo '<div class="input-group mb-3">';
+            echo '<div class="input-group-prepend">';
+            echo    '<span class="input-group-text">$</span>';
+            echo '</div>';
+            echo '<input type="text" name="price" class="form-control" aria-label="Amount (to the nearest dollar)" rquired>';
+            echo '<div class="input-group-append">';
+            echo    '<span class="input-group-text">.00</span>';
+            echo '</div>';
+            echo '</div>';
             
             echo '<div class="input-group mb-3">';
             echo '<div class="input-group-prepend">';
             echo    '<span class="input-group-text" id="purchaselinkSpan">Purchase Link URL</span>';
             echo '</div>';
-            echo '<input type="text" class="form-control" id="purchaseLink" aria-describedby="purchaselinkSpan" required>';
+            echo '<input type="text" name="link" class="form-control" id="purchaseLink" aria-describedby="purchaselinkSpan" required>';
             echo '</div>';
             
             echo '<div class="input-group mb-3">';
             echo '<div class="input-group-prepend">';
             echo    '<span class="input-group-text" id="imageLinkSpan">Image Link URL</span>';
             echo '</div>';
-            echo '<input type="text" class="form-control" id="imageLink" aria-describedby="imageLinkSpan" required>';
-            echo '</div>';
-
-            echo '<div class="input-group mb-3">';
-            echo '<div class="input-group-prepend">';
-            echo    '<span class="input-group-text">$</span>';
-            echo '</div>';
-            echo '<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" rquired>';
-            echo '<div class="input-group-append">';
-            echo    '<span class="input-group-text">.00</span>';
-            echo '</div>';
+            echo '<input type="text" name="image" class="form-control" id="imageLink" aria-describedby="imageLinkSpan" required>';
             echo '</div>';
 
             echo '<div class="input-group mb-3">';
             echo    '<div class="input-group-prepend">';
             echo        '<span class="input-group-text h-100">Description</span>';
             echo    '</div>';
-            echo    '<textarea rows="5" class="form-control" aria-label="description"></textarea>';
+            echo    '<textarea rows="5" name="description" class="form-control" aria-label="description" required></textarea>';
             echo '</div>';
 
             echo '<div class="input-group mb-3">';
             echo    '<div class="input-group-prepend">';
             echo        '<span class="input-group-text h-100">Details</span>';
             echo    '</div>';
-            echo    '<textarea rows="3" class="form-control" aria-label="details"></textarea>';
+            echo    '<textarea rows="3" name="detail" class="form-control" aria-label="details" required></textarea>';
             echo '</div>';
-            echo '<button type="submit" class="btn btn-outline-primary w-100 mb-3">Add Item</button>';
+            echo '<button type="submit" name="action" value="add" class="btn btn-outline-primary w-100 mb-3">Add Item</button>';
 
 
 
