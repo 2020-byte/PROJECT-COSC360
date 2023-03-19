@@ -186,7 +186,7 @@ if (isset($_SESSION['user_id'])) {
         <hr>
 
 
-        <link rel="stylesheet" href="../component/productItem/productItem.css">
+        <link rel="stylesheet" href="../component/productItem/productItems.css">
         <section class="item_list d-flex flex-column gap-5">
             <script  src="../component/productItem/productitems.js" async></script>
         </section>

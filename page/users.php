@@ -124,39 +124,36 @@ if (isset($_SESSION['user_id'])) {
                 }
             }
 
-            $(document).ready(() => {
-                $(".userId").click((e) => {
-                const id = $(e.target).attr("id");
-                console.log(id);
-                const status = $(e.target).attr("data-status");
+            const changeStatus = (id, status) => {
                 // Get the query string
                 var queryString = window.location.search;
-                $.ajax({
-                url:  "../database/changeStatus.php",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    userId: id,
-                    status: status,
-                },
-                success: function(response) {
-                    // Update the HTML with the fetched data
-                    console.log("changed");
-                    // Redirect to the same page with the query string
-                    window.location.href = window.location.pathname + queryString;
-                
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors here
-                    console.log("Error: " + error);
-                    console.log(xhr);
-                    window.location.href = window.location.pathname + queryString;
+                    $.ajax({
+                    url:  "../database/changeStatus.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        userId: id,
+                        status: status,
+                    },
+                    success: function(response) {
+                        // Update the HTML with the fetched data
+                        console.log("changed");
+                        // Redirect to the same page with the query string
+                    
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors here
+                        console.log("Error: " + error);
+                        console.log(xhr);
 
-                }
-                });
-            });
+                    },
+                    complete: function() {
+                        window.location.href = window.location.pathname + queryString;
 
-            })
+                    }
+                    });
+            }
+
 
             let username = "";
             let email = "";
@@ -177,6 +174,14 @@ if (isset($_SESSION['user_id'])) {
 
                     userTable_html = userTable_html.concat("</tbody>");
                     $("#userTable").html(userTable_html);
+
+                    $(".userId").click((e) => {
+                        const id = $(e.target).attr("id");
+                        console.log(id);
+                        const status = $(e.target).attr("data-status");
+                        changeStatus(id, status)
+                        
+                    });
                 
                 },
                 error: function(xhr, status, error) {
