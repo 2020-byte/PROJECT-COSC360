@@ -129,11 +129,16 @@ const showPagination = (pageNum) => {
                 `)
             }
 
-            $(".nav__page_item").click(() => {
-                console.log("item");
-                
-            });
+
             $(".nav__pagination").html(pagination_html);
+            $(".nav__page_link").click((e) => {
+                const text = $(e.target).text();
+                console.log(text);
+                if(text != "...") {
+                    currentPage = text;
+                    asyncItems(search, $('#order').val(), currentPage);
+                }
+            })
             $(".nav__page_next").click(() => {
                 console.log("next");
                 if(currentPage < pageNum) {
@@ -213,7 +218,7 @@ $("#orderButton").click((e) => {
     asyncItems(search, $('#order').val());
 })
 ////////////////////////////////////////////////////////////////////////
-const getItemNum = (search="", order) => {
+const getItemNum = (search="") => {
     $.ajax({
         url: "../database/items.php",
         type: "GET",
@@ -266,8 +271,14 @@ const asyncItems = (search = "", order, page=1) => {
     });
 }
 
-getItemNum(search,order);
-asyncItems(search, order);
+if(!search) {
+    getItemNum("");
+    asyncItems("", order);
+} else {
+    getItemNum(search);
+    asyncItems(search, order);
+}
+
 
 
 
