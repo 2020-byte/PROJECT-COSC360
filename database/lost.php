@@ -52,21 +52,27 @@ if (isset($_POST['action'])) {
         
             // Check if a row was returned
             if ($result->num_rows == 1) {
-            // Authentication successful, set session variables
-            $row = $result->fetch_assoc();
+                // Authentication successful, set session variables
+                $row = $result->fetch_assoc();
+                
             
-        
-            // $random_number = random_int(1000, 9999);
+                $to = $email;
+                $subject = "Test Email";
+                $message = "This is a test email sent using PHP.";
+                // mail($to, $subject, $message);
 
-            $error = false;
-            echo json_encode($error);
-            exit();
+
+                // $random_number = random_int(1000, 9999);
+                $error = false;
+                echo json_encode($error);
+
+                exit();
 
             } else {
-            // Authentication failed, display error message
-            $error = true;
-            echo json_encode($error);
-            exit();
+                // Authentication failed, display error message
+                $error = true;
+                echo json_encode($error);
+                exit();
     
     
             

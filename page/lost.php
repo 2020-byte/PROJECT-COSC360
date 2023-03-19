@@ -191,10 +191,9 @@ if (isset($_SESSION['user_id'])) {
 
         const handleSignButton = (e) => {
             e.preventDefault();
-            console.log("hi");
             if(isCodeSent) {
                 const code = $("#form2Code").val();
-                const value = e.target.value;
+                const value = $("#signButton").val();
                 const email = $("#form2Email").val();
                 if(code == randomNumber) {
                     checkCode(code, value, email);
