@@ -178,62 +178,24 @@ if (isset($_SESSION['user_id'])) {
         </form>
 
         <hr>
-
         <nav aria-label="Page navigation">
-            <ul class="nav__pagination">
-                <li>
-                    <a class="nav__page_previous" href="#" aria-label="Previous">
-                        <span>&laquo; Prev</span>
-                    </a>
-                </li>
-                <li class="nav__page_item">
-                    <a href="#" class="nav__page_link">1</a>
-                </li>
-                <li class="nav__page_item">
-                    <a href="#" class="nav__page_link">2</a>
-                </li>
-                <li class="nav__page_item">
-                    <a href="#" class="nav__page_link">3</a>
-                </li>
-                <li>
-                    <a class="nav__page_next" href="#" aria-label="Next">
-                        <span>Next &raquo;</span>
-                    </a>
-                </li>
+            <ul class="nav__pagination" >
+                
             </ul>
         </nav>
-
         <hr>
 
 
         <link rel="stylesheet" href="../component/productItem/productItem.css">
         <section class="item_list d-flex flex-column gap-5">
-            <script  src="../component/productItem/productitems.js" async></script>
+            <script  src="../component/productItem/productitemss.js" async></script>
         </section>
 
         <hr>
 
-        <nav aria-label="Page navigation">
-            <ul class="nav__pagination">
-                <li>
-                    <a class="nav__page_previous" href="#" aria-label="Previous">
-                        <span>&laquo; Prev</span>
-                    </a>
-                </li>
-                <li class="nav__page_item">
-                    <a href="#" class="nav__page_link">1</a>
-                </li>
-                <li class="nav__page_item">
-                    <a href="#" class="nav__page_link">2</a>
-                </li>
-                <li class="nav__page_item">
-                    <a href="#" class="nav__page_link">3</a>
-                </li>
-                <li>
-                    <a class="nav__page_next" href="#" aria-label="Next">
-                        <span>Next &raquo;</span>
-                    </a>
-                </li>
+        <nav aria-label="Page navigation ">
+            <ul class="nav__pagination d-flex justify-content-center">
+                
             </ul>
         </nav>
 
