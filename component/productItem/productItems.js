@@ -120,14 +120,16 @@ const showPagination = (pageNum) => {
                             <span>Next &raquo;</span>
                         </a>
                     </li>
-                    <style>
-                        .currentPage{
-                            color: red;
-                            font-weight: 900;
-                        }
-                    </style>
                 `)
             }
+            pagination_html = pagination_html.concat(`
+                <style>
+                    .currentPage{
+                        color: red;
+                        font-weight: 900;
+                    }
+                </style>
+            `)
 
 
             $(".nav__pagination").html(pagination_html);
