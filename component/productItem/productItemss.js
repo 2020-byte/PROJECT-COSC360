@@ -215,7 +215,10 @@ let order = 0;
 $("#orderButton").click((e) => {
     e.preventDefault();
 
+    currentPage = 1;
     asyncItems(search, $('#order').val());
+
+
 })
 ////////////////////////////////////////////////////////////////////////
 const getItemNum = (search="") => {
