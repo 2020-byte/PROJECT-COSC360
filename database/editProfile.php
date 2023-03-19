@@ -32,36 +32,40 @@ if (isset($_SESSION['user_id'])) {
 
 
 
+try {
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+        // Get the user data from the database
+        $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $userData = $result->fetch_assoc();
 
+        // Get the form data
+        $username = isset($_POST["username"])&& $_POST["username"] !="" ? $_POST["username"] : $userData["username"];
+        $password = isset($_POST["password"])&& $_POST["password"] !="" ? $_POST["password"] : $userData["password"];
+        $email = isset($_POST["email"])&& $_POST["email"] !="" ? $_POST["email"] : $userData["email"];
 
-    
-    // Get the user data from the database
-    $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $userData = $result->fetch_assoc();
+        // Update the user data
+        $stmt = $conn->prepare("UPDATE users SET username = ?, password = ?, email = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $username, $password, $email, $userId);
+        $stmt->execute();
 
-    // Get the form data
-    $username = isset($_POST["username"])&& $_POST["username"] !="" ? $_POST["username"] : $userData["username"];
-    $password = isset($_POST["password"])&& $_POST["password"] !="" ? $_POST["password"] : $userData["password"];
-    $email = isset($_POST["email"])&& $_POST["email"] !="" ? $_POST["email"] : $userData["email"];
-    
-    // Update the user data
-    $stmt = $conn->prepare("UPDATE users SET username = ?, password = ?, email = ? WHERE id = ?");
-    $stmt->bind_param("sssi", $username, $password, $email, $userId);
-    $stmt->execute();
+        if ($stmt->errno != 0) {
+            echo "Error updating row: " . $stmt->error;
+            header("Location: ../page/profile.php");
 
-    if ($stmt->errno != 0) {
-        echo "Error updating row: " . $stmt->error;
-    } else {
-        header("Location: ../page/profile.php");
+        } else {
+            header("Location: ../page/profile.php");
+        }
     }
+} catch (Exception $e) {
+    // Handle the exception gracefully
+    echo "Error: " . $e->getMessage();
+    header("Location: ../page/profile.php");
+
 }
 
-
-
-
 ?>
+
