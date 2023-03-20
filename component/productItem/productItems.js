@@ -276,6 +276,11 @@ const asyncItems = (search = "", order, page=1) => {
     });
 }
 
+
+if(typeof search === "undefined") {
+    search = false;
+}
+
 if(!search) {
     getItemNum("");
     asyncItems("", order);
