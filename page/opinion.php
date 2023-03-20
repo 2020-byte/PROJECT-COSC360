@@ -120,7 +120,7 @@ if (isset($_SESSION['user_id'])) {
               </div>
             <div class="form-group">
               <label for="review" style="display: none;">Review</label>
-                <textarea name="review" class="form-control" rows="6" id="review"></textarea>
+                <textarea name="review" class="form-control" rows="6" id="review" required></textarea>
             </div>
             <div id="formButtonBox" class="d-flex gap-2 flex-md-row flex-column">
                 

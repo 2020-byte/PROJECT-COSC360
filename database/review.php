@@ -21,14 +21,15 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-
+$itemId = $_POST["itemId"];
+try {
     // Check if the form was submitted
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         // Get the form data
         $rating = $_POST["rating"];
         $review = $_POST["review"];
-        $itemId = $_POST["itemId"];
+        
         // Start session
         session_start();
 
@@ -90,4 +91,16 @@ if (!$conn) {
             $conn->close();
         }
     }
+
+} catch (Exception $e) {
+    // Handle the exception gracefully
+    echo "Error: " . $e->getMessage();
+    header("Location: ../page/product.php?id=".$itemId."");
+
+}
+
+header("Location: ../page/product.php?id=".$itemId."");
+
+
+    
 ?>

@@ -263,7 +263,7 @@ if (isset($_SESSION['user_id'])) {
               </div>
             <div class="form-group">
               <label for="review" style="display: none;">Review</label>
-              <textarea name="review" class="form-control" id="review" rows="6" placeholder="Review"></textarea>
+              <textarea name="review" class="form-control" id="review" rows="6" placeholder="Review" required></textarea>
             </div>
             <?php
 
