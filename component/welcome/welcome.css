@@ -1,0 +1,68 @@
+
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+
+.button_container {
+	position: absolute;
+  left: 0;
+  right: 0;
+  top: 30%;
+}
+
+.weldescription {
+  font-family: 'Amatic SC', cursive;
+  text-align: center;
+  color: white;
+}
+
+.weldescription {
+	font-size: 35px;
+}
+
+.welbtn {
+  border: none;
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: #222;
+  padding: 17px 60px;
+  margin: 0 auto;
+
+  /* box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(207, 207, 207, 0.893) 0px -3px 0px inset; */
+
+  /* box-shadow: rgba(240, 46, 170, 0.4) 0px 5px, rgba(240, 46, 170, 0.3) 0px 10px, rgba(240, 46, 170, 0.2) 0px 15px, rgba(240, 46, 170, 0.1) 0px 20px, rgba(240, 46, 170, 0.05) 0px 25px; */
+
+  box-shadow: rgba(221, 231, 241, 0.913) 0px 0px 0px 3px;
+  
+}
+
+.welbtn span {
+  position: relative; 
+  z-index: 1;
+}
+
+.welbtn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 490%;
+  width: 140%;
+  background: #78c7d2;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
+  transform: translateX(-98%) translateY(-25%) rotate(45deg);
+}
+
+.welbtn:hover:after {
+  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
+  transform: translateX(-9%) translateY(-25%) rotate(45deg);
+}
+
+

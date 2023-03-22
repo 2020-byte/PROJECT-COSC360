@@ -1,0 +1,135 @@
+.search-background {
+    background-color: #fff3cd;
+    opacity: 1;
+
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.nav__box {
+    max-width:1200px;
+    width: 100%;
+    height: 70px;
+    padding: 2% 1%;
+}
+
+.menu {
+    display: none!important;
+    border-radius: 0.375rem!important;
+    border: 1px solid rgb(174, 174, 174)!important;
+    padding: 0.5rem!important;
+    background-color: aliceblue!important;
+}
+
+.menu i {
+    font-size: 1.5rem;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.navbar-brand {
+    min-width: 50px;
+    width:5%;
+    min-height: 15px;
+}
+
+
+.navbar-brand img{
+    object-fit: scale-down;
+    width: 100%;
+    min-height: 15px;
+}
+
+.nav__form {
+    display: flex;
+    justify-content: center;
+
+    width: 50%;
+    border-radius: 0.375rem;
+    border: 0.5px solid lightgray;
+    transition: box-shadow 0.2s ease-in;
+}
+
+.nav__form input {
+    border: 0px;
+    height: 100%;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    outline: none;
+}
+
+.nav__form button {
+    background-color: lightgray;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+    border: 0px;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.nav__form-clicked {
+    border-color: #FF0000;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+    transition: all 0.2s ease-in;
+}
+
+.nav__form button:hover, .menu:hover {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 2s ease infinite;
+}
+
+.nav__form button:hover i, .menu:hover i {
+    color: white;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+.dropdown-toggle {
+    border: none!important;
+}
+
+.dropdown .fa-user {
+    color:blue;
+}
+
+.dropdown-menu > li > a:hover,
+.offcanvas > a:hover {
+    background-color: lightblue;
+    transition: 0.2s ease-in;
+}
+
+
+@media only screen and (max-width: 992px) {
+    .menu {
+        display: block!important;
+    }
+
+    .nav__form {
+        width: 100%;
+    }
+
+    nav .dropdown {
+        display: none;
+    }
+}
+
+
+
+.offcanvas a {
+    text-decoration: none;
+    color: black;
+    padding: 0.5rem 0.2rem;
+}
