@@ -79,7 +79,7 @@ if (isset($_SESSION['user_id'])) {
         if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == 1 && isset($_GET['id'])) {
           
           // Load the environment variables from the .env file
-          $env = parse_ini_file('../.env');
+          $env = parse_ini_file('../../../.env');
 
           // Set the environment variables as PHP constants
           foreach ($env as $key => $value) {

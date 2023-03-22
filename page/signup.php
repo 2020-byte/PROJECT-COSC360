@@ -26,7 +26,7 @@
 
 <?php
 // Load the environment variables from the .env file
-$env = parse_ini_file('../.env');
+$env = parse_ini_file('../../../.env');
 
 // Set the environment variables as PHP constants
 foreach ($env as $key => $value) {

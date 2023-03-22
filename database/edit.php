@@ -1,6 +1,6 @@
 <?php
 // Load the environment variables from the .env file
-$env = parse_ini_file('../.env');
+$env = parse_ini_file('../../../.env');
 
 // Set the environment variables as PHP constants
 foreach ($env as $key => $value) {
@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $review = $_POST["review"];
             
           
-            $stmt = $conn->prepare("UPDATE opinions SET review = ?, rating = ? WHERE id = ?");
+            $stmt = $conn->prepare("UPDATE opinions SET review = ?, rating = ?, updated_at =  NOW() WHERE id = ?");
             $stmt->bind_param("ssi", $review, $rating, $id);
             // Execute the statement
             if ($stmt->execute() === TRUE) {
