@@ -1,4 +1,8 @@
 # 🐪 Camelcamelcamel Clone
+## Deploy Version URL: https://cosc360.ok.ubc.ca/gyumin/PROJECT-COSC360-1/page/
+
+---
+
 ## Description
 
 
@@ -9,9 +13,13 @@
 > The administrator can manage user information and posts and may change data about items.
 
 > Visit the site we tried to clone code to get a better idea of the overall functionality. 
-### URL: https://ca.camelcamelcamel.com
+### Real Camelcamelcamel Website URL: https://ca.camelcamelcamel.com
 
 <br/>
+
+## Description Document: [link 🖱️](./document/Server_Side_Proposal.pdf)
+
+---
 
 ## Client Side Prview
 ### URL: https://boisterous-duckanoo-39a298.netlify.app/page/index.html
