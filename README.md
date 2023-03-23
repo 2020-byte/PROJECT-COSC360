@@ -62,7 +62,7 @@
 
 </br>
 
-![contributors](https://img.shields.io/badge/contributor-2-green)
+![contributors](https://img.shields.io/badge/contributor-1-green)
 
 
 
