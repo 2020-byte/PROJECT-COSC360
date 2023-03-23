@@ -75,7 +75,7 @@ if (isset($_POST['login'])) {
         $row = $result->fetch_assoc();
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['email'] = $email;
-        $_SESSION['status'] = $row['status'];
+        $_SESSION['status'] = 1;
   
         // Redirect to authorized page
         header("Location: ./index.php");
