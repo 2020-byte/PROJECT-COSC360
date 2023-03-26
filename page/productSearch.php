@@ -189,6 +189,7 @@ if (isset($_SESSION['user_id'])) {
         <link rel="stylesheet" href="../component/productItem/productItems.css">
         <section class="item_list d-flex flex-column gap-5">
             <script>
+                let order = 0;
 
 
 const showPagination = (pageNum) => {
@@ -331,20 +332,32 @@ const showPagination = (pageNum) => {
                 console.log(text);
                 if(text != "...") {
                     currentPage = text;
-                    asyncItems(search, $('#order').val(), currentPage);
+                    clearInterval(intervalID);
+                    asyncItems(search, order, currentPage);
+                    intervalID = setInterval(() => {
+                        asyncItems(search, order, currentPage);
+                    }, 100000);
                 }
             })
             $(".nav__page_next").click(() => {
                 console.log("next");
                 if(currentPage < pageNum) {
                     currentPage++;
-                    asyncItems(search, $('#order').val(), currentPage);
+                    clearInterval(intervalID);
+                    asyncItems(search, order, currentPage);
+                    intervalID = setInterval(() => {
+                        asyncItems(search, order, currentPage);
+                    }, 100000);
                 }
             });
             $(".nav__page_previous").click(() => {
                 if(currentPage > 1) {
                     currentPage--;
-                    asyncItems(search, $('#order').val(), currentPage);
+                    clearInterval(intervalID);
+                    asyncItems(search, order, currentPage);
+                    intervalID = setInterval(() => {
+                        asyncItems(search, order, currentPage);
+                    }, 100000);
                 }
             });
 }
@@ -367,13 +380,18 @@ let currentPage = 1;
 let pageNum;
 
 
-let order = 0;
+
 
 $("#orderButton").click((e) => {
     e.preventDefault();
 
     currentPage = 1;
-    asyncItems(search, $('#order').val());
+    clearInterval(intervalID);
+    order = $('#order').val()
+    asyncItems(search, order);
+    intervalID = setInterval(() => {
+        asyncItems(search, order);
+    }, 100000);
 
 
 })
@@ -440,6 +458,16 @@ if(typeof search === "undefined") {
 
 console.log(search);
 
+var intervalID = setInterval(() => {
+    console.log('setData');
+    if(!search) {
+        getItemNum("");
+        asyncItems("", order);
+    } else {
+        getItemNum(search);
+        asyncItems(search, order);
+    }
+}, 100000);
 if(!search) {
     getItemNum("");
     asyncItems("", order);
@@ -447,6 +475,8 @@ if(!search) {
     getItemNum(search);
     asyncItems(search, order);
 }
+
+
 
 
 
