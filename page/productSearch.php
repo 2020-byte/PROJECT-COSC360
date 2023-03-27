@@ -40,11 +40,83 @@ if (isset($_SESSION['user_id'])) {
 } 
 ?>
 
+<a id="scrollTopButton"></a>
+<link rel="stylesheet" href="..\component\scrollTop\scrollTopButton.css">
+<style>
+#scrollTopButton {
+    display: inline-block;
+    background-color: #FF9800;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, 
+      opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    text-decoration: none;
+  }
+  #scrollTopButton::after {
+    content: "\f077";
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+  }
+  #scrollTopButton:hover {
+    cursor: pointer;
+    background-color: #333;
+  }
+  #scrollTopButton:active {
+    background-color: #555;
+  }
+  #scrollTopButton.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Styles for the content section */
+  
+
+  @media (min-width: 500px) {
+
+    #scrollTopButton{
+      margin: 30px;
+    }
+  }
+</style>
+
+<script src="..\component\scrollTop\scrollTopButton.js"></script>
+<script>
+var btn = $('#scrollTopButton');
+
+$(window).scroll(function() {
+  if ($(window).scrollTop() > 300) {
+    btn.addClass('show');
+  } else {
+    btn.removeClass('show');
+  }
+});
+
+btn.on('click', function(e) {
+  e.preventDefault();
+  $('html, body').animate({scrollTop:0}, '100');
+});
+</script>
+
+
+
 
     <!-- Header Search Bar -->
     
     <link rel="stylesheet" href="../component/searchBar/searcBar.css">
-    <header id="headerSearchBar" style="position: sticky; top: 0; z-index: 1;">
+    <header id="headerSearchBar" style="position: sticky; top: 0;z-index: 2;">
         <script src="../component/searchBar/searchBar.js"></script>
     </header>
     <div class="mx-auto p-4" style=" max-width:1200px; min-height: 685px;">
@@ -614,6 +686,92 @@ $(document).on("click", ".item_box__button.opinion", function() {
         </nav>
 
     </div>
+
+    <!--  -->
+    <div class="Ocean">
+  
+  <svg class="Wave" viewBox="0 0 12960 1120">
+    
+    <path d="M9720,320C8100,320,8100,0,6480,0S4860,320,3240,320,1620,0,0,0V1120H12960V0C11340,0,11340,320,9720,320Z">
+      
+        <animate
+            dur="5s"
+            repeatCount="indefinite"
+            attributeName="d"
+            values="
+              M9720,320C8100,320,8100,0,6480,0S4860,320,3240,320,1620,0,0,0V1120H12960V0C11340,0,11340,320,9720,320Z;
+              M9720,0C8100,0,8100,319,6480,319S4860,0,3240,0,1620,320,0,320v800H12960V320C11340,320,11340,0,9720,0Z;
+              M9720,320C8100,320,8100,0,6480,0S4860,320,3240,320,1620,0,0,0V1120H12960V0C11340,0,11340,320,9720,320Z
+            "/>
+      
+    </path>
+    
+  </svg>
+
+  
+  
+</div>
+
+<style>
+
+#addItem {
+    background: white;
+    border-radius: 5px;
+    padding: 1rem;
+    padding-bottom: 0;
+    margin-bottom: 0.5rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+ body {
+    background: linear-gradient(white, #eafafe);
+}
+
+
+
+.item_box {
+    background-color: white;
+}
+
+.item_list {
+    z-index:-1;
+}
+
+
+.item_box__des_info {
+    z-index: 1;
+}
+
+.item_box__opinion{
+    z-index: 1;
+}
+
+header {
+    z-index: 3;
+}
+
+
+
+    /* waves */
+
+    .ocean {
+        position:absolute;
+    }
+
+    .Wave {
+        position:relative;
+
+  fill: #caf4fe;
+}
+
+
+
+</style>
+
+    <!--  -->
+
+
+
     <div id="footer">
         <script src="../component/footer/footer.js"></script>
     </div>

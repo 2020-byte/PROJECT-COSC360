@@ -43,6 +43,76 @@ if (isset($_SESSION['user_id'])) {
 }
 } 
 ?>
+<a id="scrollTopButton"></a>
+<link rel="stylesheet" href="..\component\scrollTop\scrollTopButton.css">
+<style>
+#scrollTopButton {
+    display: inline-block;
+    background-color: #FF9800;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, 
+      opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+    text-decoration: none;
+  }
+  #scrollTopButton::after {
+    content: "\f077";
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2em;
+    line-height: 50px;
+    color: #fff;
+  }
+  #scrollTopButton:hover {
+    cursor: pointer;
+    background-color: #333;
+  }
+  #scrollTopButton:active {
+    background-color: #555;
+  }
+  #scrollTopButton.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Styles for the content section */
+  
+
+  @media (min-width: 500px) {
+
+    #scrollTopButton{
+      margin: 30px;
+    }
+  }
+</style>
+<script src="..\component\scrollTop\scrollTopButton.js"></script>
+<script>
+var btn = $('#scrollTopButton');
+
+$(window).scroll(function() {
+  if ($(window).scrollTop() > 300) {
+    btn.addClass('show');
+  } else {
+    btn.removeClass('show');
+  }
+});
+
+btn.on('click', function(e) {
+  e.preventDefault();
+  $('html, body').animate({scrollTop:0}, '100');
+});
+</script>
+
+
 <body style="height:100vh;">
 
     <!-- Header Search Bar -->
