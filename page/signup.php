@@ -65,6 +65,7 @@ if (isset($_POST['signup'])) {
       // Check if email and password are valid
       $email = $_POST['email'];
       $password = $_POST['password'];
+      $password = password_hash( $password, PASSWORD_DEFAULT);
       $username = $_POST['username'];
 
       $email_query = "SELECT * FROM users WHERE email='$email'";

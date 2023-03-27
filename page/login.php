@@ -54,54 +54,56 @@ if (!$conn) {
     exit();
   }
 
-  // Check if login form was submitted
+// Check if login form was submitted
 if (isset($_POST['login'])) {
     // Check if email and password are set and not empty
     if (!empty($_POST['email']) && !empty($_POST['password'])) {
-      // Check if email and password are valid
-      $email = $_POST['email'];
-      $password = $_POST['password'];
-  
-  
-      // Prepare and execute SQL query to check if email and password match
-      $stmt = $conn->prepare('SELECT id, status FROM users WHERE email = ? AND password = ?');
-      $stmt->bind_param('ss', $email, $password);
-      $stmt->execute();
-      $result = $stmt->get_result();
-  
-      // Check if a row was returned
-      if ($result->num_rows == 1) {
-        // Authentication successful, set session variables
-        $row = $result->fetch_assoc();
-        $_SESSION['user_id'] = $row['id'];
-        $_SESSION['email'] = $email;
-        $_SESSION['status'] = $row['status'];
-  
-        // Redirect to authorized page
-        header("Location: ./index.php");
-        exit();
-      } else {
-        // Authentication failed, display error message
-        $error_message = "Invalid email or password.";
-        echo '<script>console.log("'.$error_message.'");</script>';
-        echo '<script>showMessage("' . $error_message . '")</script>';
+        // Check if email is valid
+        $email = $_POST['email'];
 
+        // Prepare and execute SQL query to retrieve the user's hashed password
+        $stmt = $conn->prepare('SELECT id, status, password FROM users WHERE email = ?');
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        
-    }
-  
-      // Close database connection
-      mysqli_close($conn);
+        // Check if a row was returned
+        if ($result->num_rows == 1) {
+            // Fetch the row and verify the hashed password
+            $row = $result->fetch_assoc();
+            $hashed_password = $row['password'];
+            $input_password = $_POST['password'];
+
+            if (password_verify($input_password, $hashed_password)) {
+                // Authentication successful, set session variables
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['email'] = $email;
+                $_SESSION['status'] = $row['status'];
+
+                // Redirect to authorized page
+                header("Location: ./index.php");
+                exit();
+            } else {
+                // Authentication failed, display error message
+                $error_message = "Invalid email or password.";
+                echo '<script>console.log("'.$error_message.'");</script>';
+                echo '<script>showMessage("' . $error_message . '")</script>';
+            }
+        } else {
+            // Authentication failed, display error message
+            $error_message = "Invalid email or password.";
+            echo '<script>console.log("'.$error_message.'");</script>';
+            echo '<script>showMessage("' . $error_message . '")</script>';
+        }
+
+        // Close database connection
+        mysqli_close($conn);
     } else {
-      // Email and/or password inputs are empty, display error message
-      $error_message = "Please enter a valid email and password.";
-      echo '<script>console.log("'.$error_message.'");</script>';
+        // Email and/or password inputs are empty, display error message
+        $error_message = "Please enter a valid email and password.";
+        echo '<script>console.log("'.$error_message.'");</script>';
     }
-  }
-
-
-
-
+}
 ?>
 
 
