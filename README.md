@@ -1,6 +1,7 @@
 # 🐪 Camelcamelcamel Clone
 ## Deploy Version URL: https://cosc360.ok.ubc.ca/gyumin/PROJECT-COSC360-1/page/
 
+### Demo Video: https://youtu.be/kuAut6DZlu8
 ---
 
 ## Description
