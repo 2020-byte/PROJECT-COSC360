@@ -113,7 +113,7 @@ btn.on('click', function(e) {
 </script>
 
 
-<body style="height:100vh;">
+<body style="min-height:100vh;">
 
     <!-- Header Search Bar -->
     
@@ -122,7 +122,7 @@ btn.on('click', function(e) {
         <script src="../component/searchBar/searchBar.js" async></script>
     </header>
 
-    <div class="mx-auto p-4" style="max-width:1200px; height: 100%;">
+    <div class="mx-auto p-4" style="max-width:1200px; height: 100%; min-height:700px">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
@@ -139,7 +139,7 @@ btn.on('click', function(e) {
         background-color: rgb(241, 235, 204);
         box-shadow: rgba(110, 155, 191, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
         "
-        class="mx-auto p-5"
+        class="mx-auto p-5 d-flex flex-column"
         >
 
         <div class="input-groupd d-flex gap-3 flex-column flex-md-row">
@@ -288,7 +288,7 @@ btn.on('click', function(e) {
            
         </script>
 
-        <table id="userTable" class="table table-striped">
+        <table id="userTable" class="table table-striped d-flex justify-cotent-center">
             
             
             

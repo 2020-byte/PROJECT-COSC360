@@ -65,7 +65,7 @@ if (isset($_SESSION['user_id'])) {
         "
         class="mx-auto p-5"
         >
-            <form method="POST" action="../database/editProfile.php">
+            <form method="POST" action="../database/editProfile.php" enctype= multipart/form-data>
                 <!-- Email input -->
                 <div class="form-outline mb-4">
                   <input type="text" name="username" id="form2Username" class="form-control" value="Ex Username" placeholder="username" />
@@ -83,6 +83,22 @@ if (isset($_SESSION['user_id'])) {
                     <input name="email" type="email" id="form2Email" class="form-control" palceholder="Email address" />
                     <label  style="display:none;"  class="form-label" for="form2Email"></label>
                 </div>
+
+                
+                <div>
+                    <img id="profileImage" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" 
+                    width="100" height="100" alt="profile iamge"
+                    style="border-radius: 50%;"
+                    >
+                </div>
+
+                <div class="mb-3">
+                    <label for="userImage" class="form-label">Profile Image</label>
+                    <input class="form-control" type="file" id="userImage" name="userImage">
+                </div>
+
+                
+
               
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary btn-block mb-4 w-100">Update</button>
@@ -104,30 +120,70 @@ if (isset($_SESSION['user_id'])) {
           $(document).ready(function() {
 
   $.ajax({
-    url: "../database/users.php",
-    type: "GET",
-    dataType: "json",
+        url: "../database/users.php",
+        type: "GET",
+        dataType: "json",
 
-    success: function(response) {
-        // Update the HTML with the fetched data
-        // $("#username").text(response.username);
-        console.log(response);
-        $('#form2Username').val(response.username);
-        $('#form2Email').val(response.email);
+        success: function(response) {
+            // Update the HTML with the fetched data
+            // $("#username").text(response.username);
+            console.log(response);
+            $('#form2Username').val(response.username);
+            $('#form2Email').val(response.email);
 
 
 
-    },
-    error: function(xhr, status, error) {
-        // Handle errors here
-        console.log("Error: " + error);
-    }
-});
+        },
+        error: function(xhr, status, error) {
+            // Handle errors here
+            console.log("Error: " + error);
+        }
+    });
+
+    // $.ajax({
+    //     url: "../database/userImage.php",
+    //     type: "GET",
+    //     xhrFields: {
+    //         responseType: 'blob'
+    //     },
+    //     success: function(response) {
+    //         console.log(response);
+    //         var imageUrl = URL.createObjectURL(response);
+    //         console.log(imageUrl);
+    //         $('#userImage').attr('src', imageUrl);
+    //     },
+    //     error: function(xhr, status, error) {
+    //         // Handle errors here
+    //         console.log("Error: " + error);
+    //     }
+    // });
+
+    $.ajax({
+        url: "../database/userImg.php",
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            var imageUrl = response.src;
+            console.log(imageUrl);
+            $('#profileImage').attr('src', imageUrl);
+        },
+        error: function(xhr, status, error) {
+            // Handle errors here
+            console.log("Error: " + error);
+        }
+    });
 })
 
 
-
         </script>
+
+
+
+
+
+
+
+
 
         
 </body>

@@ -95,14 +95,42 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           // process delete action
           $stmt = $conn->prepare("DELETE FROM opinions WHERE id = ?");
           $stmt->bind_param("i", $id);
-          $stmt->execute();
-          header("Location: ../page/product.php?id=".$itemId);
+          if ($stmt->execute() === TRUE) {
+                // Prepare the SQL statement to get the average rating
+                $sql = "SELECT AVG(rating) AS average_rating FROM opinions WHERE itemId = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $itemId);
+
+                // Execute the statement
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                // Fetch the result as an associative array
+                $row = $result->fetch_assoc();
+                $average_rating = $row['average_rating'];
+
+                // Close the statement and result set
+                $stmt->close();
+                $result->close();
+
+                // Prepare the SQL statement to update the other table
+                $sql = "UPDATE items SET rating = ? WHERE id = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("di", $average_rating, $itemId);
 
 
-          if ($stmt->errno != 0) {
-            echo "Error deleting row: " . $stmt->error;
+                if ($stmt->execute() === TRUE) {
+                    header("Location: ../page/product.php?id=".$itemId);
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
 
-        }
+                $stmt->close();
+                $conn->close();
+
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
 
         }
       }

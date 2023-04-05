@@ -24,23 +24,23 @@ $email= $_GET['email'];
 $username = $_GET['username'];
 
 
-$sql = "SELECT * FROM users ";
-
+$sql = "SELECT id, username, password, email, status FROM users ";
 
 if($email) {
-    $sql = $sql."WHERE email LIKE '%".$email."%' ";
+    $sql .= "WHERE email LIKE '%".$email."%' ";
     if($username) {
-        $sql = $sql."AND username LIKE '%".$username."%'";
+        $sql .= "AND username LIKE '%".$username."%'";
     }
 }else {
     if($username) {
-        $sql = $sql."WHERE username LIKE '%".$username."%'";
+        $sql .= "WHERE username LIKE '%".$username."%'";
     }
 }
 
-
-
 $result = $conn->query($sql);
+
+
+
 
 
 
@@ -49,7 +49,9 @@ $data = array();
 if ($result->num_rows > 0) {
     // Loop through all rows and add data to the array
     while($row = $result->fetch_assoc()) {
-        $data[] = $row;
+        if ($row['id'] != '1') {
+            $data[] = $row;
+        }
     }
 }
 

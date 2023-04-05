@@ -35,25 +35,28 @@ const lastPart = `
 
 
 
-$.ajax({
-  url:  "../database/opinions.php",
-  type: "GET",
-  dataType: "json",
-  data: {
-    itemId: itemId
-  },
-  success: function(response) {
-    // Update the HTML with the fetched data]
-    showOpinion(response);
-
-    
-
-  },
-  error: function(xhr, status, error) {
+function fetchData() {
+  $.ajax({
+    url:  "../database/opinions.php",
+    type: "GET",
+    dataType: "json",
+    data: {
+      itemId: itemId
+    },
+    success: function(response) {
+      // Update the HTML with the fetched data
+      showOpinion(response);
+    },
+    error: function(xhr, status, error) {
       // Handle errors here
       console.log("First Error: " + error);
-  }
-});
+    }
+  });
+}
+
+fetchData();
+
+var intervalID = setInterval(fetchData, 1000);
 
 const showOpinion = async (opinions) => {
   opinionList_html = firstPart;
@@ -73,7 +76,6 @@ const showOpinion = async (opinions) => {
       success: function(response) {
         // Update the HTML with the fetched data
 
-        console.timeLog("date: "+created_at);
         opinionList_html = opinionList_html.concat(`
           <tr id="${id}" data-userId="${userId}">
               <th scope="row">${i+1}</th>
