@@ -18,7 +18,7 @@
 
 <br/>
 
-## Description Document: [link 🖱️](./document/The full site_description.pdf)
+## Description Document: [link 🖱️](./document/The_full_site_description.pdf)
 
 ---
 
