@@ -18,7 +18,7 @@
 
 <br/>
 
-## Description Document: [link 🖱️](./document/Server_Side_Proposal.pdf)
+## Description Document: [link 🖱️](./document/The full site_description.pdf)
 
 ---
 
